@@ -162,8 +162,8 @@
         .marquee-item {
             display: inline-flex;
             align-items: center;
-            gap: 20px;
-            margin-right: 60px;
+            gap: 30px;
+            margin-right: 50px;
         }
 
         .marquee-text {
@@ -273,7 +273,6 @@
         // =====================
         const METEO_DURATION = 10000;    // 10 secondes
         const TRAFIC_DURATION = 10000;   // 10 secondes
-        const FADE_DURATION = 400;       // 0.4s pour chaque phase (total 0.8s)
 
         // Ordre impératif des vidéos : Video 3 -> Video 1 -> Video 4 -> Video 2
         const VIDEOS = [
@@ -286,7 +285,6 @@
         // =====================
         // ÉLÉMENTS DOM
         // =====================
-        const fadeOverlay = document.getElementById('fade-overlay');
         const slideMeteo = document.getElementById('slide-meteo');
         const slideTrafic = document.getElementById('slide-trafic');
         const slideVideo = document.getElementById('slide-video');
@@ -299,22 +297,8 @@
         let currentSlide = 'meteo'; // 'meteo', 'trafic', 'video'
 
         // =====================
-        // FONCTIONS DE TRANSITION
+        // FONCTIONS UTILITAIRES
         // =====================
-        function fadeToBlack() {
-            return new Promise(resolve => {
-                fadeOverlay.classList.add('active');
-                setTimeout(resolve, FADE_DURATION);
-            });
-        }
-
-        function fadeFromBlack() {
-            return new Promise(resolve => {
-                fadeOverlay.classList.remove('active');
-                setTimeout(resolve, FADE_DURATION);
-            });
-        }
-
         function hideAllSlides() {
             slideMeteo.classList.remove('active');
             slideTrafic.classList.remove('active');
@@ -326,57 +310,37 @@
         // =====================
 
         // Afficher le slide Météo
-        async function showMeteo() {
-            await fadeToBlack();
+        function showMeteo() {
             hideAllSlides();
             slideMeteo.classList.add('active');
             currentSlide = 'meteo';
-            await fadeFromBlack();
 
             // Après 10s, passer au trafic
             setTimeout(showTrafic, METEO_DURATION);
         }
 
         // Afficher le slide Trafic
-        async function showTrafic() {
-            await fadeToBlack();
+        function showTrafic() {
             hideAllSlides();
             slideTrafic.classList.add('active');
             currentSlide = 'trafic';
-            await fadeFromBlack();
 
             // Après 10s, passer aux vidéos
             setTimeout(playNextVideo, TRAFIC_DURATION);
         }
 
-        // Jouer la vidéo suivante
-        async function playNextVideo() {
-            // Si on vient d'une vidéo : coupe franche (pas de fondu)
-            // Sinon (météo/trafic) : fondu normal
-            const isFromVideo = (currentSlide === 'video');
-
-            if (!isFromVideo) {
-                // Fondu noir pour transition depuis météo/trafic
-                await fadeToBlack();
-            }
-
+        // Jouer la vidéo suivante - Version simplifiée et fluide
+        function playNextVideo() {
+            // Transition simple via CSS
             hideAllSlides();
             slideVideo.classList.add('active');
             currentSlide = 'video';
 
-            // Charger la vidéo
+            // Charger et lancer la vidéo
             videoPlayer.src = VIDEOS[currentVideoIndex];
             videoPlayer.load();
-
-            if (!isFromVideo) {
-                // Fondu retour uniquement si on venait de météo/trafic
-                await fadeFromBlack();
-            }
-
-            // Lancer la lecture
             videoPlayer.play().catch(err => {
                 console.error('Erreur lecture vidéo:', err);
-                // En cas d'erreur, passer à la suite
                 handleVideoEnd();
             });
 
