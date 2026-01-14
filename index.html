@@ -47,13 +47,13 @@
             opacity: 1;
         }
 
-        /* Slides communs */
+        /* Slides communs - Overscan pour masquer les bords */
         .slide {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: -0.25vh;
+            left: -0.25vw;
+            width: 100.5vw;
+            height: 100.5vh;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
@@ -70,22 +70,22 @@
 
         /* Slide Météo - MeteoTV Officiel */
         #slide-meteo iframe {
-            width: 100%;
-            height: 100%;
+            width: 100.5vw;
+            height: 100.5vh;
             border: none;
         }
 
         /* Slide Trafic */
         #slide-trafic iframe {
-            width: 100%;
-            height: 100%;
+            width: 100.5vw;
+            height: 100.5vh;
             border: none;
         }
 
         /* Slide Vidéo */
         #slide-video video {
-            width: 100%;
-            height: 100%;
+            width: 100.5vw;
+            height: 100.5vh;
             object-fit: cover;
             background-color: #000;
         }
@@ -96,29 +96,54 @@
         #footer {
             position: fixed;
             bottom: 0;
-            left: 30px;
-            right: 30px;
+            left: 60px;
+            right: 60px;
             width: auto;
-            height: 11vh;
+            height: 9vh;
             background-color: #e30613;
             color: white;
             display: flex;
             align-items: center;
             z-index: 9999;
-            border-radius: 40px 40px 0 0;
+            border-radius: 30px 30px 0 0;
             overflow: hidden;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
         }
 
-        /* Container du texte défilant */
+        /* Container du texte défilant avec fondu sur les bords */
         .marquee-wrapper {
             flex: 1;
             overflow: hidden;
             height: 100%;
             display: flex;
             align-items: center;
-            margin-left: 40px;
-            margin-right: 40px;
+            position: relative;
+        }
+
+        /* Fondu gauche */
+        .marquee-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            background: linear-gradient(to right, #e30613 0%, transparent 100%);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Fondu droite */
+        .marquee-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            background: linear-gradient(to left, #e30613 0%, transparent 100%);
+            z-index: 10;
+            pointer-events: none;
         }
 
         /* Animation du défilement */
@@ -127,27 +152,28 @@
             align-items: center;
             animation: scroll-left 25s linear infinite;
             white-space: nowrap;
+            padding-left: 60px;
         }
 
         /* Élément répété dans le marquee */
         .marquee-item {
             display: flex;
             align-items: center;
-            padding-right: 80px;
+            padding-right: 60px;
         }
 
         .marquee-text {
             color: #ffffff;
-            font-size: 1.8rem;
+            font-size: 2.2vh;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        /* Logo défilant - PLUS GROS */
+        /* Logo défilant - taille adaptée */
         .marquee-logo {
-            height: 80px;
-            margin-left: 80px;
+            height: 6vh;
+            margin-left: 60px;
             vertical-align: middle;
             filter: brightness(0) invert(1);
         }
