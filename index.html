@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grün Signalisation - Affichage Dynamique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Zone de contenu principal (au-dessus du bandeau) */
+        .content-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 100px);
+            background-color: #1a1a1a;
+        }
+
+        /* Overlay de transition (fondu au noir) - Ne couvre PAS le bandeau */
+        #fade-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 100px);
+            background-color: #000;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 500;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        #fade-overlay.active {
+            opacity: 1;
+        }
+
+        /* Slides communs */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a1a;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Slide Météo - MeteoTV Officiel */
+        #slide-meteo iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Slide Trafic */
+        #slide-trafic iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Slide Vidéo */
+        #slide-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #000;
+        }
+
+        /* ===================== */
+        /* FOOTER / BANDEAU ROUGE */
+        /* ===================== */
+        #footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-color: #e30613;
+            display: flex;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* Logo fixe à gauche - SANS fond blanc */
+        .logo-fixed {
+            height: 80px;
+            margin-left: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            background: transparent;
+        }
+
+        .logo-fixed img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Container du texte défilant */
+        .marquee-wrapper {
+            flex: 1;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin-left: 30px;
+            margin-right: 20px;
+        }
+
+        /* Animation du défilement */
+        .marquee-track {
+            display: flex;
+            align-items: center;
+            animation: scroll-left 25s linear infinite;
+            white-space: nowrap;
+        }
+
+        /* Élément répété dans le marquee */
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            padding-right: 80px;
+        }
+
+        .marquee-text {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Logo défilant - PLUS GROS */
+        .marquee-logo {
+            height: 80px;
+            margin-left: 80px;
+            vertical-align: middle;
+            filter: brightness(0) invert(1);
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Zone de contenu (slides) -->
+    <div class="content-area">
+        <!-- Overlay fondu au noir -->
+        <div id="fade-overlay"></div>
+
+        <!-- SLIDE 1 : MÉTÉO (MeteoTV Officiel) -->
+        <div id="slide-meteo" class="slide active">
+            <iframe
+                src="https://www.meteoblue.com/fr/meteotv/691358"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- SLIDE 2 : TRAFIC WAZE - Zoom 14 -->
+        <div id="slide-trafic" class="slide">
+            <iframe
+                src="https://embed.waze.com/iframe?zoom=14&lat=49.58001&lon=6.1349&ct=livemap&pin=1"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- SLIDE 3 : VIDÉOS -->
+        <div id="slide-video" class="slide">
+            <video id="video-player" muted playsinline></video>
+        </div>
+    </div>
+
+    <!-- FOOTER / BANDEAU ROUGE FIXE -->
+    <footer id="footer">
+        <!-- Logo fixe à gauche (sans fond blanc) -->
+        <div class="logo-fixed">
+            <img src="assets/logo_grun.png" alt="Grün Logo">
+        </div>
+
+        <!-- Texte défilant avec logos intercalés (logos plus gros) -->
+        <div class="marquee-wrapper">
+            <div class="marquee-track">
+                <!-- Bloc 1 -->
+                <div class="marquee-item">
+                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
+                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
+                </div>
+                <!-- Bloc 2 -->
+                <div class="marquee-item">
+                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
+                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
+                </div>
+                <!-- Bloc 3 -->
+                <div class="marquee-item">
+                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
+                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
+                </div>
+                <!-- Bloc 4 -->
+                <div class="marquee-item">
+                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
+                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
+                </div>
+                <!-- Bloc 5 (duplication pour boucle fluide) -->
+                <div class="marquee-item">
+                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
+                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
+                </div>
+                <!-- Bloc 6 -->
+                <div class="marquee-item">
+                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
+                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT PRINCIPAL -->
+    <script>
+        // =====================
+        // CONFIGURATION
+        // =====================
+        const METEO_DURATION = 10000;    // 10 secondes
+        const TRAFIC_DURATION = 10000;   // 10 secondes
+        const FADE_DURATION = 400;       // 0.4s pour chaque phase (total 0.8s)
+
+        // Ordre impératif des vidéos : Video 3 -> Video 1 -> Video 4 -> Video 2
+        const VIDEOS = [
+            'assets/video3.mp4',
+            'assets/video1.mp4',
+            'assets/video4.mp4',
+            'assets/video2.mp4'
+        ];
+
+        // =====================
+        // ÉLÉMENTS DOM
+        // =====================
+        const fadeOverlay = document.getElementById('fade-overlay');
+        const slideMeteo = document.getElementById('slide-meteo');
+        const slideTrafic = document.getElementById('slide-trafic');
+        const slideVideo = document.getElementById('slide-video');
+        const videoPlayer = document.getElementById('video-player');
+
+        // =====================
+        // ÉTAT
+        // =====================
+        let currentVideoIndex = 0;
+        let currentSlide = 'meteo'; // 'meteo', 'trafic', 'video'
+
+        // =====================
+        // FONCTIONS DE TRANSITION
+        // =====================
+        function fadeToBlack() {
+            return new Promise(resolve => {
+                fadeOverlay.classList.add('active');
+                setTimeout(resolve, FADE_DURATION);
+            });
+        }
+
+        function fadeFromBlack() {
+            return new Promise(resolve => {
+                fadeOverlay.classList.remove('active');
+                setTimeout(resolve, FADE_DURATION);
+            });
+        }
+
+        function hideAllSlides() {
+            slideMeteo.classList.remove('active');
+            slideTrafic.classList.remove('active');
+            slideVideo.classList.remove('active');
+        }
+
+        // =====================
+        // FONCTIONS DE NAVIGATION
+        // =====================
+
+        // Afficher le slide Météo
+        async function showMeteo() {
+            await fadeToBlack();
+            hideAllSlides();
+            slideMeteo.classList.add('active');
+            currentSlide = 'meteo';
+            await fadeFromBlack();
+
+            // Après 10s, passer au trafic
+            setTimeout(showTrafic, METEO_DURATION);
+        }
+
+        // Afficher le slide Trafic
+        async function showTrafic() {
+            await fadeToBlack();
+            hideAllSlides();
+            slideTrafic.classList.add('active');
+            currentSlide = 'trafic';
+            await fadeFromBlack();
+
+            // Après 10s, passer aux vidéos
+            setTimeout(playNextVideo, TRAFIC_DURATION);
+        }
+
+        // Jouer la vidéo suivante
+        async function playNextVideo() {
+            await fadeToBlack();
+            hideAllSlides();
+            slideVideo.classList.add('active');
+            currentSlide = 'video';
+
+            // Charger la vidéo
+            videoPlayer.src = VIDEOS[currentVideoIndex];
+            videoPlayer.load();
+
+            await fadeFromBlack();
+
+            // Lancer la lecture
+            videoPlayer.play().catch(err => {
+                console.error('Erreur lecture vidéo:', err);
+                // En cas d'erreur, passer à la suite
+                handleVideoEnd();
+            });
+
+            // Incrémenter l'index
+            currentVideoIndex = (currentVideoIndex + 1) % VIDEOS.length;
+        }
+
+        // Gérer la fin d'une vidéo
+        function handleVideoEnd() {
+            if (currentVideoIndex === 0) {
+                // On a fait le tour des 4 vidéos, retour à la météo
+                showMeteo();
+            } else {
+                // Vidéo suivante
+                playNextVideo();
+            }
+        }
+
+        // =====================
+        // ÉVÉNEMENTS VIDÉO
+        // =====================
+        videoPlayer.addEventListener('ended', handleVideoEnd);
+
+        videoPlayer.addEventListener('error', (e) => {
+            console.error('Erreur vidéo:', e);
+            handleVideoEnd();
+        });
+
+        // =====================
+        // INITIALISATION
+        // =====================
+        function init() {
+            console.log('Grün Signalisation - Diaporama initialisé');
+            console.log('Séquence: Météo (10s) > Trafic (10s) > Vidéo3 > Vidéo1 > Vidéo4 > Vidéo2 > Boucle');
+
+            // Commencer par la météo pendant 10 secondes
+            setTimeout(showTrafic, METEO_DURATION);
+        }
+
+        // Lancer au chargement
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
