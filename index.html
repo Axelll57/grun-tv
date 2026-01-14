@@ -93,6 +93,13 @@
             background-color: #000;
         }
 
+        /* Slide Image */
+        #slide-image .slide-image {
+            width: 100.5vw;
+            height: 100.5vh;
+            object-fit: cover;
+        }
+
         /* ===================== */
         /* FOOTER / BANDEAU ROUGE STYLE ONGLET */
         /* ===================== */
@@ -220,6 +227,11 @@
         <div id="slide-video" class="slide">
             <video id="video-player" muted playsinline preload="auto"></video>
         </div>
+
+        <!-- SLIDE 4 : IMAGE REPAS -->
+        <div id="slide-image" class="slide">
+            <img class="slide-image" src="assets/repas.png" alt="Repas fin d'année">
+        </div>
     </div>
 
     <!-- FOOTER / BANDEAU ROUGE FLOTTANT -->
@@ -273,8 +285,9 @@
         // =====================
         const METEO_DURATION = 10000;    // 10 secondes
         const TRAFIC_DURATION = 10000;   // 10 secondes
+        const IMAGE_DURATION = 10000;    // 10 secondes pour l'image
 
-        // Ordre : Video3 -> Video1 -> Video4 -> Video2
+        // Ordre : Video3 -> Video1 -> IMAGE -> Video4 -> Video2
         const VIDEOS = [
             'assets/video3.mp4',
             'assets/video1.mp4',
@@ -288,13 +301,14 @@
         const slideMeteo = document.getElementById('slide-meteo');
         const slideTrafic = document.getElementById('slide-trafic');
         const slideVideo = document.getElementById('slide-video');
+        const slideImage = document.getElementById('slide-image');
         const videoPlayer = document.getElementById('video-player');
 
         // =====================
         // ÉTAT
         // =====================
         let currentVideoIndex = 0;
-        let currentSlide = 'meteo'; // 'meteo', 'trafic', 'video'
+        let currentSlide = 'meteo'; // 'meteo', 'trafic', 'video', 'image'
 
         // =====================
         // FONCTIONS UTILITAIRES
@@ -303,6 +317,7 @@
             slideMeteo.classList.remove('active');
             slideTrafic.classList.remove('active');
             slideVideo.classList.remove('active');
+            slideImage.classList.remove('active');
         }
 
         // =====================
@@ -348,10 +363,23 @@
             currentVideoIndex = (currentVideoIndex + 1) % VIDEOS.length;
         }
 
+        // Afficher l'image du repas
+        function showImage() {
+            hideAllSlides();
+            slideImage.classList.add('active');
+            currentSlide = 'image';
+
+            // Après 10s, passer à la vidéo suivante (video4)
+            setTimeout(playNextVideo, IMAGE_DURATION);
+        }
+
         // Gérer la fin d'une vidéo
         function handleVideoEnd() {
-            if (currentVideoIndex === 0) {
-                // On a fait le tour des 4 vidéos, retour à la météo
+            // Après video1 (index devient 2), afficher l'image
+            if (currentVideoIndex === 2) {
+                showImage();
+            } else if (currentVideoIndex === 0) {
+                // On a fait le tour, retour à la météo
                 showMeteo();
             } else {
                 // Vidéo suivante
@@ -374,7 +402,7 @@
         // =====================
         function init() {
             console.log('Grün Signalisation - Diaporama initialisé');
-            console.log('Séquence: Météo (10s) > Trafic (10s) > Vidéo3 > Vidéo1 > Vidéo4 > Vidéo2 > Boucle');
+            console.log('Séquence: Météo (10s) > Trafic (10s) > Vidéo3 > Vidéo1 > Image Repas (10s) > Vidéo4 > Vidéo2 > Boucle');
 
             // Commencer par la météo pendant 10 secondes
             setTimeout(showTrafic, METEO_DURATION);
