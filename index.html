@@ -158,11 +158,12 @@
             padding-left: 60px;
         }
 
-        /* Élément répété dans le marquee */
+        /* Élément répété dans le marquee - espacements équilibrés */
         .marquee-item {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            padding-right: 60px;
+            gap: 20px;
+            margin-right: 60px;
         }
 
         .marquee-text {
@@ -173,10 +174,9 @@
             letter-spacing: 2px;
         }
 
-        /* Logo défilant - avant le texte */
+        /* Logo défilant */
         .marquee-logo {
             height: 6vh;
-            margin-right: 30px;
             vertical-align: middle;
             filter: brightness(0) invert(1);
         }
@@ -351,7 +351,15 @@
 
         // Jouer la vidéo suivante
         async function playNextVideo() {
-            await fadeToBlack();
+            // Si on vient d'une vidéo : coupe franche (pas de fondu)
+            // Sinon (météo/trafic) : fondu normal
+            const isFromVideo = (currentSlide === 'video');
+
+            if (!isFromVideo) {
+                // Fondu noir pour transition depuis météo/trafic
+                await fadeToBlack();
+            }
+
             hideAllSlides();
             slideVideo.classList.add('active');
             currentSlide = 'video';
@@ -360,7 +368,10 @@
             videoPlayer.src = VIDEOS[currentVideoIndex];
             videoPlayer.load();
 
-            await fadeFromBlack();
+            if (!isFromVideo) {
+                // Fondu retour uniquement si on venait de météo/trafic
+                await fadeFromBlack();
+            }
 
             // Lancer la lecture
             videoPlayer.play().catch(err => {
