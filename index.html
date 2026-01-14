@@ -19,23 +19,23 @@
             width: 100vw;
         }
 
-        /* Zone de contenu principal (au-dessus du bandeau) */
+        /* Zone de contenu principal (plein écran, passe derrière le footer) */
         .content-area {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 100px);
+            height: 100vh;
             background-color: #1a1a1a;
         }
 
-        /* Overlay de transition (fondu au noir) - Ne couvre PAS le bandeau */
+        /* Overlay de transition (fondu au noir) */
         #fade-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 100px);
+            height: 100vh;
             background-color: #000;
             opacity: 0;
             pointer-events: none;
@@ -91,22 +91,23 @@
         }
 
         /* ===================== */
-        /* FOOTER / BANDEAU ROUGE FLOTTANT */
+        /* FOOTER / BANDEAU ROUGE STYLE ONGLET */
         /* ===================== */
         #footer {
             position: fixed;
-            bottom: 30px;
+            bottom: 0;
             left: 30px;
             right: 30px;
             width: auto;
-            height: 100px;
+            height: 11vh;
             background-color: #e30613;
+            color: white;
             display: flex;
             align-items: center;
             z-index: 9999;
-            border-radius: 60px;
+            border-radius: 40px 40px 0 0;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
         }
 
         /* Container du texte défilant */
