@@ -317,8 +317,28 @@
         <!-- Overlay fondu au noir -->
         <div id="fade-overlay"></div>
 
-        <!-- SLIDE 1 : MUR DE CAMÉRAS CITA -->
-        <div class="slide active" id="slide-multicam">
+        <!-- SLIDE 1 : MÉTÉO (10s) -->
+        <div class="slide active" id="slide-meteo" data-duration="10000">
+            <iframe src="https://www.meteoblue.com/fr/meteotv/691358" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- SLIDE 2 : WAZE (10s) -->
+        <div class="slide" id="slide-waze" data-duration="10000">
+            <iframe src="https://embed.waze.com/iframe?zoom=12&lat=49.6116&lon=6.1319&ct=livemap" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- SLIDE 3 : VIDÉO 3 -->
+        <div class="slide video-slide">
+            <video src="assets/video3.mp4" muted playsinline></video>
+        </div>
+
+        <!-- SLIDE 4 : VIDÉO 1 -->
+        <div class="slide video-slide">
+            <video src="assets/video1.mp4" muted playsinline></video>
+        </div>
+
+        <!-- SLIDE 5 : CAMÉRAS CITA (15s) -->
+        <div class="slide" id="slide-cita" data-duration="15000">
             <div class="header-cam">
                 <h1>CAMÉRAS EN DIRECT</h1>
             </div>
@@ -350,27 +370,14 @@
             </div>
         </div>
 
-        <!-- SLIDE 2 : MÉTÉO (MeteoTV Officiel) -->
-        <div id="slide-meteo" class="slide">
-            <iframe
-                src="https://www.meteoblue.com/fr/meteotv/691358"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
+        <!-- SLIDE 6 : VIDÉO 4 -->
+        <div class="slide video-slide">
+            <video src="assets/video4.mp4" muted playsinline></video>
         </div>
 
-        <!-- SLIDE 2 : TRAFIC WAZE - Zoom 14 -->
-        <div id="slide-trafic" class="slide">
-            <iframe
-                src="https://embed.waze.com/iframe?zoom=14&lat=49.58001&lon=6.1349&ct=livemap&pin=1"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
-        </div>
-
-        <!-- SLIDE 3 : VIDÉOS -->
-        <div id="slide-video" class="slide">
-            <video id="video-player" muted playsinline preload="auto"></video>
+        <!-- SLIDE 7 : VIDÉO 2 -->
+        <div class="slide video-slide">
+            <video src="assets/video2.mp4" muted playsinline></video>
         </div>
     </div>
 
@@ -421,128 +428,58 @@
     <!-- SCRIPT PRINCIPAL -->
     <script>
         // =====================
-        // CONFIGURATION
-        // =====================
-        const MULTICAM_DURATION = 15000; // 15 secondes
-        const METEO_DURATION = 10000;    // 10 secondes
-        const TRAFIC_DURATION = 10000;   // 10 secondes
-
-        // Ordre : Video3 -> Video1 -> Video4 -> Video2
-        const VIDEOS = [
-            'assets/video3.mp4',
-            'assets/video1.mp4',
-            'assets/video4.mp4',
-            'assets/video2.mp4'
-        ];
-
-        // =====================
         // ÉLÉMENTS DOM
         // =====================
-        const slideMulticam = document.getElementById('slide-multicam');
-        const slideMeteo = document.getElementById('slide-meteo');
-        const slideTrafic = document.getElementById('slide-trafic');
-        const slideVideo = document.getElementById('slide-video');
-        const videoPlayer = document.getElementById('video-player');
+        const slides = document.querySelectorAll('.slide');
+        let currentIndex = 0;
 
         // =====================
-        // ÉTAT
+        // FONCTIONS
         // =====================
-        let currentVideoIndex = 0;
-        let currentSlide = 'multicam'; // 'multicam', 'meteo', 'trafic', 'video'
 
-        // =====================
-        // FONCTIONS UTILITAIRES
-        // =====================
+        // Cacher tous les slides
         function hideAllSlides() {
-            slideMulticam.classList.remove('active');
-            slideMeteo.classList.remove('active');
-            slideTrafic.classList.remove('active');
-            slideVideo.classList.remove('active');
+            slides.forEach(slide => slide.classList.remove('active'));
         }
 
-        // =====================
-        // FONCTIONS DE NAVIGATION
-        // =====================
-
-        // Afficher le slide Multicam (Caméras CITA)
-        function showMulticam() {
+        // Afficher le slide suivant
+        function showSlide(index) {
             hideAllSlides();
-            slideMulticam.classList.add('active');
-            currentSlide = 'multicam';
+            const slide = slides[index];
+            slide.classList.add('active');
 
-            // Après 15s, passer à la météo
-            setTimeout(showMeteo, MULTICAM_DURATION);
-        }
-
-        // Afficher le slide Météo
-        function showMeteo() {
-            hideAllSlides();
-            slideMeteo.classList.add('active');
-            currentSlide = 'meteo';
-
-            // Après 10s, passer au trafic
-            setTimeout(showTrafic, METEO_DURATION);
-        }
-
-        // Afficher le slide Trafic
-        function showTrafic() {
-            hideAllSlides();
-            slideTrafic.classList.add('active');
-            currentSlide = 'trafic';
-
-            // Après 10s, passer aux vidéos
-            setTimeout(playNextVideo, TRAFIC_DURATION);
-        }
-
-        // Jouer la vidéo suivante - Version simplifiée et fluide
-        function playNextVideo() {
-            // Transition simple via CSS
-            hideAllSlides();
-            slideVideo.classList.add('active');
-            currentSlide = 'video';
-
-            // Charger et lancer la vidéo
-            videoPlayer.src = VIDEOS[currentVideoIndex];
-            videoPlayer.load();
-            videoPlayer.play().catch(err => {
-                console.error('Erreur lecture vidéo:', err);
-                handleVideoEnd();
-            });
-
-            // Incrémenter l'index
-            currentVideoIndex = (currentVideoIndex + 1) % VIDEOS.length;
-        }
-
-        // Gérer la fin d'une vidéo
-        function handleVideoEnd() {
-            if (currentVideoIndex === 0) {
-                // On a fait le tour des 4 vidéos, retour aux caméras
-                showMulticam();
+            // Vérifier si c'est un slide vidéo
+            const video = slide.querySelector('video');
+            if (video) {
+                // C'est une vidéo : attendre la fin
+                video.currentTime = 0;
+                video.play().catch(err => {
+                    console.error('Erreur lecture vidéo:', err);
+                    nextSlide();
+                });
+                video.onended = nextSlide;
             } else {
-                // Vidéo suivante
-                playNextVideo();
+                // C'est un iframe : utiliser data-duration
+                const duration = parseInt(slide.dataset.duration) || 10000;
+                setTimeout(nextSlide, duration);
             }
         }
 
-        // =====================
-        // ÉVÉNEMENTS VIDÉO
-        // =====================
-        videoPlayer.addEventListener('ended', handleVideoEnd);
-
-        videoPlayer.addEventListener('error', (e) => {
-            console.error('Erreur vidéo:', e);
-            handleVideoEnd();
-        });
+        // Passer au slide suivant
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
 
         // =====================
         // INITIALISATION
         // =====================
         function init() {
             console.log('Grün Signalisation - Diaporama initialisé');
-            console.log('Séquence: Multicam (15s) > Météo (10s) > Trafic (10s) > Vidéo3 > Vidéo1 > Vidéo4 > Vidéo2 > Boucle');
+            console.log('Séquence: Météo (10s) > Waze (10s) > Video3 > Video1 > CITA (15s) > Video4 > Video2 > Boucle');
 
-            // Commencer par les caméras CITA pendant 15 secondes
-            setTimeout(showMeteo, MULTICAM_DURATION);
+            // Démarrer avec le premier slide (Météo)
+            showSlide(0);
         }
 
         // Lancer au chargement
