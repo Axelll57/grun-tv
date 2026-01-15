@@ -96,44 +96,59 @@
         /* ===================== */
         /* GRILLE MULTI-CAMÉRAS CITA */
         /* ===================== */
-        .cam-title {
-            text-align: center;
-            color: white;
-            font-size: 3vh;
-            margin-top: 2vh;
-            margin-bottom: 1vh;
-            font-weight: 800;
-            text-transform: uppercase;
+
+        /* 1. LE TITRE (Positionnement absolu en haut) */
+        .header-cam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
         }
 
+        .header-cam h1 {
+            color: white;
+            font-size: 3.5vh;
+            font-weight: 800;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* 2. LA GRILLE (Ajustée pour laisser la place au titre) */
         .cam-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(2, 1fr);
             width: 100vw;
-            height: 78vh; /* S'arrête avant le footer */
-            background: #000;
+            height: 84vh;
+            margin-top: 8vh;
             gap: 4px;
-            margin-top: 0;
-            align-content: center;
+            background: #000;
         }
 
         .cam-box {
             position: relative;
             overflow: hidden;
-            background: #222;
-            border-radius: 8px;
-            margin: 2px;
+            background: #000;
+            border: 1px solid #333;
         }
 
-        /* IFRAME ZOOMÉE (Crop du site CITA) */
+        /* 3. LE CADRAGE CHIRURGICAL (Zoom sur la vidéo) */
         .cam-box iframe {
             position: absolute;
-            width: 300%;
-            height: 300%;
+            width: 250%;
+            height: 250%;
             border: none;
-            transform: scale(0.333);
+            transform: scale(0.4);
             transform-origin: top left;
+            top: -230px;
+            left: -75%;
             pointer-events: none;
         }
 
@@ -143,14 +158,13 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            color: #fff;
-            font-weight: 800;
-            font-size: 1.5vh;
+            background: rgba(227, 6, 19, 0.9);
+            color: white;
+            font-weight: bold;
+            font-size: 1.6vh;
             text-align: center;
-            padding: 8px 0;
-            z-index: 20;
-            border-top: 2px solid #e30613;
+            padding: 6px 0;
+            z-index: 10;
         }
 
         /* ===================== */
@@ -260,7 +274,9 @@
 
         <!-- SLIDE 1 : MUR DE CAMÉRAS CITA -->
         <div class="slide active" id="slide-multicam">
-            <h1 class="cam-title">CAMÉRA EN DIRECT</h1>
+            <div class="header-cam">
+                <h1>CAMÉRAS EN DIRECT</h1>
+            </div>
             <div class="cam-grid">
                 <div class="cam-box">
                     <iframe src="https://www.cita.lu/fr/live-stream/a1.html" scrolling="no"></iframe>
