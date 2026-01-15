@@ -101,10 +101,11 @@
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(2, 1fr);
             width: 100vw;
-            height: 91vh; /* S'arrête avant le footer */
+            height: 82vh; /* S'arrête avant le footer */
             background: #000;
             gap: 4px;
-            padding-top: 10px;
+            margin-top: 2vh;
+            align-content: center;
         }
 
         .cam-box {
@@ -121,8 +122,10 @@
             width: 400%;
             height: 400%;
             border: none;
-            transform: scale(0.25) translate(-37%, -45%);
-            transform-origin: 0 0;
+            transform: scale(0.25);
+            transform-origin: top left;
+            top: -450px;
+            left: -150px;
             pointer-events: none;
         }
 
@@ -132,13 +135,13 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.85);
             color: #fff;
             font-weight: 800;
             font-size: 1.8vh;
             text-align: center;
             padding: 8px 0;
-            z-index: 10;
+            z-index: 20;
             border-top: 2px solid #e30613;
         }
 
