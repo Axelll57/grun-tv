@@ -260,19 +260,20 @@
 
         /* L'ANIMATION DE DÉFILEMENT */
         .scrolling-text {
+            position: absolute;
             white-space: nowrap;
             color: white;
             font-family: 'Arial', sans-serif;
             font-weight: bold;
-            font-size: 3.5vh;
+            font-size: 4vh;
             text-transform: uppercase;
-            animation: scroll-left 20s linear infinite;
+            animation: scroll-banner 20s linear infinite;
         }
 
-        /* DÉFINITION DU MOUVEMENT */
-        @keyframes scroll-left {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-150%); }
+        /* DÉFINITION DU MOUVEMENT (Vitesse stable basée sur %) */
+        @keyframes scroll-banner {
+            0% { left: 100%; }
+            100% { left: -120%; }
         }
     </style>
 </head>
@@ -421,22 +422,30 @@
         // GESTION DU BANDEAU DÉFILANT
         // =====================
         let msgIndex = 0;
-        const textElement = document.getElementById('dynamic-text');
 
-        function rotateBannerMessage() {
-            // Si le fichier messages.js est bien chargé
-            if (typeof bannerMessages !== 'undefined' && bannerMessages.length > 0) {
-                // Répétition x10 pour créer un flux continu sans vide
-                textElement.innerText = (bannerMessages[msgIndex] + "   ---   ").repeat(10);
+        function startBannerLoop() {
+            // Charger les messages externes OU secours
+            let messages = (typeof bannerMessages !== 'undefined') ? bannerMessages : ["BIENVENUE CHEZ GRÜN SIGNALISATION"];
 
-                // Passer au suivant pour la prochaine fois (boucle)
-                msgIndex = (msgIndex + 1) % bannerMessages.length;
+            const textElement = document.getElementById('dynamic-text');
+            if (!textElement) return;
 
-                // Reset l'animation pour qu'elle reparte du début
+            function updateText() {
+                // 1. On répète le texte 4 fois pour remplir l'écran (Anti-Vide)
+                let baseText = messages[msgIndex] + "   ---   ";
+                textElement.innerText = baseText.repeat(4);
+
+                // 2. Astuce pour relancer l'animation CSS à zéro
                 textElement.style.animation = 'none';
-                textElement.offsetHeight; /* Force le recalcul (reflow) */
-                textElement.style.animation = 'scroll-left 20s linear infinite';
+                void textElement.offsetWidth; // Force le reset
+                textElement.style.animation = 'scroll-banner 20s linear infinite';
+
+                // 3. Préparer le prochain changement
+                msgIndex = (msgIndex + 1) % messages.length;
+                setTimeout(updateText, 20000); // Changement toutes les 20s
             }
+
+            updateText();
         }
 
         // =====================
@@ -450,8 +459,7 @@
             showSlide(0);
 
             // Démarrer le bandeau défilant
-            rotateBannerMessage();
-            setInterval(rotateBannerMessage, 20000);
+            startBannerLoop();
         }
 
         // Lancer au chargement
