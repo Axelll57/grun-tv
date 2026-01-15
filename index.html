@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grün Signalisation - Affichage Dynamique</title>
     <style>
+        /* 0. RESET GLOBAL ET FOND NOIR PUR */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #000;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
+        html, body {
+            background-color: #000000;
             margin: 0;
             padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         /* Zone de contenu principal (plein écran, passe derrière le footer) */
@@ -28,7 +29,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background-color: #000;
+            background-color: #000000;
         }
 
         /* Overlay de transition (fondu au noir) */
@@ -62,7 +63,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #1a1a1a;
+            background-color: #000000;
         }
 
         .slide.active {
@@ -99,7 +100,7 @@
         /* GRILLE MULTI-CAMÉRAS CITA */
         /* ===================== */
 
-        /* 1. HEADER (Titre plus grand et fond unifié) */
+        /* 1. HEADER (Titre) */
         .header-cam {
             position: absolute;
             top: 0;
@@ -109,8 +110,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #000;
+            background-color: #000000;
             z-index: 20;
+            border: none;
         }
 
         .header-cam h1 {
@@ -123,7 +125,7 @@
             letter-spacing: 2px;
         }
 
-        /* 2. GRILLE (Fond noir pur) */
+        /* 2. GRILLE (Conteneur) */
         .cam-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -131,38 +133,67 @@
             height: 72vh;
             width: 100vw;
             margin-top: 12vh;
-            background-color: #000;
+            background-color: #000000;
             gap: 4px;
         }
 
-        /* 3. CASE (Fond noir pur) */
+        /* 3. CASE INDIVIDUELLE */
         .cam-box {
             position: relative;
             overflow: hidden;
-            background-color: #000;
-            border: 1px solid #1a1a1a;
+            background-color: #000000;
+            border: 1px solid #111;
         }
 
-        /* 4. REGLAGE DU CADRAGE (Correction Critique) */
+        /* 4. REGLAGES IFRAME DE BASE (Communs à tous) */
         .cam-box iframe {
             position: absolute;
             width: 1920px;
             height: 1080px;
             border: none;
-            transform: scale(0.60);
             transform-origin: top left;
-            top: -110px;
-            left: -200px;
             pointer-events: none;
         }
 
-        /* 5. ETIQUETTES (Fond noir) */
+        /* ===== REGLAGES INDIVIDUELS (Chirurgie) ===== */
+
+        /* CAM 1 : A1 (Était trop bas -> On remonte fort) */
+        .cam-box:nth-child(1) iframe {
+            transform: scale(0.60) translate(-200px, -160px);
+        }
+
+        /* CAM 2 : A3 (Était trop haut -> On descend) */
+        .cam-box:nth-child(2) iframe {
+            transform: scale(0.60) translate(-200px, -60px);
+        }
+
+        /* CAM 3 : A4 (Barre blanche en haut -> On remonte) */
+        .cam-box:nth-child(3) iframe {
+            transform: scale(0.60) translate(-200px, -150px);
+        }
+
+        /* CAM 4 : A6 (À ajuster légèrement) */
+        .cam-box:nth-child(4) iframe {
+            transform: scale(0.60) translate(-200px, -120px);
+        }
+
+        /* CAM 5 : A7 (À ajuster légèrement) */
+        .cam-box:nth-child(5) iframe {
+            transform: scale(0.60) translate(-200px, -120px);
+        }
+
+        /* CAM 6 : A13 (Barre blanche en haut -> On remonte) */
+        .cam-box:nth-child(6) iframe {
+            transform: scale(0.60) translate(-200px, -150px);
+        }
+
+        /* 5. ETIQUETTES */
         .cam-label {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #000;
+            background-color: #000000;
             color: #fff;
             font-size: 2.2vh;
             font-weight: bold;
