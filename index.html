@@ -99,7 +99,7 @@
         /* GRILLE MULTI-CAMÉRAS CITA */
         /* ===================== */
 
-        /* 1. HEADER (Titre) */
+        /* 1. HEADER (Titre plus grand et fond unifié) */
         .header-cam {
             position: absolute;
             top: 0;
@@ -109,22 +109,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000;
+            background-color: #000;
             z-index: 20;
-            border-bottom: none;
         }
 
         .header-cam h1 {
             color: white;
-            font-size: 5vh;
+            font-size: 7vh;
             font-family: 'Arial', sans-serif;
-            font-weight: 400;
+            font-weight: 700;
             text-transform: uppercase;
             margin: 0;
-            letter-spacing: -1px;
+            letter-spacing: 2px;
         }
 
-        /* 2. GRILLE */
+        /* 2. GRILLE (Fond noir pur) */
         .cam-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -132,32 +131,32 @@
             height: 72vh;
             width: 100vw;
             margin-top: 12vh;
-            background: #000;
+            background-color: #000;
             gap: 4px;
         }
 
-        /* 3. CASE INDIVIDUELLE */
+        /* 3. CASE (Fond noir pur) */
         .cam-box {
             position: relative;
             overflow: hidden;
-            background: #000;
-            border: 1px solid #222;
+            background-color: #000;
+            border: 1px solid #1a1a1a;
         }
 
-        /* 4. REGLAGE VIDEO (ZOOM X2 par rapport à avant) */
+        /* 4. REGLAGE DU CADRAGE (Correction Critique) */
         .cam-box iframe {
             position: absolute;
             width: 1920px;
             height: 1080px;
             border: none;
-            transform: scale(0.55);
+            transform: scale(0.60);
             transform-origin: top left;
-            top: -280px;
-            left: -250px;
+            top: -110px;
+            left: -200px;
             pointer-events: none;
         }
 
-        /* 5. ETIQUETTES */
+        /* 5. ETIQUETTES (Fond noir) */
         .cam-label {
             position: absolute;
             bottom: 0;
