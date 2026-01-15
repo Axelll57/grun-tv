@@ -97,41 +97,43 @@
         /* GRILLE MULTI-CAMÉRAS CITA */
         /* ===================== */
 
-        /* 1. LE TITRE (Positionnement absolu en haut) */
+        /* 1. HEADER (Titre) */
         .header-cam {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 8vh;
+            height: 10vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #000;
             z-index: 20;
         }
 
         .header-cam h1 {
             color: white;
-            font-size: 3.5vh;
-            font-weight: 800;
+            font-size: 5vh;
+            font-family: 'Arial', sans-serif;
+            font-weight: 400;
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            letter-spacing: -1px;
         }
 
-        /* 2. LA GRILLE (Ajustée pour laisser la place au titre) */
+        /* 2. LA GRILLE (Le conteneur) */
         .cam-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(2, 1fr);
+            height: 80vh;
             width: 100vw;
-            height: 84vh;
-            margin-top: 8vh;
-            gap: 4px;
+            margin-top: 10vh;
             background: #000;
+            gap: 0;
         }
 
+        /* 3. LES CASES (Blocs individuels) */
         .cam-box {
             position: relative;
             overflow: hidden;
@@ -139,32 +141,33 @@
             border: 1px solid #333;
         }
 
-        /* 3. LE CADRAGE CHIRURGICAL (Zoom sur la vidéo) */
+        /* 4. LE REGLAGE DU CADRAGE (C'est là que tout se joue) */
         .cam-box iframe {
             position: absolute;
-            width: 250%;
-            height: 250%;
+            width: 380%;
+            height: 380%;
             border: none;
-            transform: scale(0.4);
+            transform: scale(0.26);
             transform-origin: top left;
-            top: -230px;
-            left: -75%;
+            top: -380px;
+            left: -40px;
             pointer-events: none;
         }
 
-        /* ETIQUETTE (Nom de l'autoroute) */
+        /* 5. LES ÉTIQUETTES (Style Maquette) */
         .cam-label {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(227, 6, 19, 0.9);
-            color: white;
+            background: #000;
+            color: #fff;
+            font-size: 1.8vh;
             font-weight: bold;
-            font-size: 1.6vh;
             text-align: center;
-            padding: 6px 0;
-            z-index: 10;
+            padding: 8px 0;
+            text-transform: uppercase;
+            z-index: 30;
         }
 
         /* ===================== */
