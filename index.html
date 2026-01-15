@@ -100,7 +100,7 @@
         /* GRILLE MULTI-CAMÉRAS CITA */
         /* ===================== */
 
-        /* 1. HEADER (Titre sur fond gris) */
+        /* 1. HEADER */
         .header-cam {
             position: absolute;
             top: 0;
@@ -108,8 +108,9 @@
             width: 100%;
             height: 12vh;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
+            padding-bottom: 2vh;
             background-color: #1a1a1a;
             z-index: 20;
         }
@@ -155,36 +156,43 @@
             pointer-events: none;
         }
 
-        /* ===== REGLAGES FINAUX (Zoom 0.65 & Décalage Droite -450px) ===== */
+        /* ===== REGLAGES VERTICAUX FINAUX ===== */
+        /* X fixé à -450px, Scale 0.66 */
+
+        /* GROUPE 1 : Descendre franchement (Y = -125px) */
 
         /* CAM 1 : A1 */
         .cam-box:nth-child(1) iframe {
-            transform: scale(0.65) translate(-450px, -180px);
+            transform: scale(0.66) translate(-450px, -125px);
         }
 
         /* CAM 2 : A3 */
         .cam-box:nth-child(2) iframe {
-            transform: scale(0.65) translate(-450px, -180px);
+            transform: scale(0.66) translate(-450px, -125px);
         }
 
         /* CAM 3 : A4 */
         .cam-box:nth-child(3) iframe {
-            transform: scale(0.65) translate(-450px, -180px);
+            transform: scale(0.66) translate(-450px, -125px);
         }
+
+        /* GROUPE 2 : Descendre un peu moins (Y = -135px) */
 
         /* CAM 4 : A6 */
         .cam-box:nth-child(4) iframe {
-            transform: scale(0.65) translate(-450px, -160px);
+            transform: scale(0.66) translate(-450px, -135px);
         }
 
         /* CAM 5 : A7 */
         .cam-box:nth-child(5) iframe {
-            transform: scale(0.65) translate(-450px, -160px);
+            transform: scale(0.66) translate(-450px, -135px);
         }
+
+        /* RETOUR GROUPE 1 */
 
         /* CAM 6 : A13 */
         .cam-box:nth-child(6) iframe {
-            transform: scale(0.65) translate(-450px, -180px);
+            transform: scale(0.66) translate(-450px, -125px);
         }
 
         /* 5. ETIQUETTES (Fond gris) */
