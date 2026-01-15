@@ -96,15 +96,25 @@
         /* ===================== */
         /* GRILLE MULTI-CAMÉRAS CITA */
         /* ===================== */
+        .cam-title {
+            text-align: center;
+            color: white;
+            font-size: 3vh;
+            margin-top: 2vh;
+            margin-bottom: 1vh;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
         .cam-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(2, 1fr);
             width: 100vw;
-            height: 82vh; /* S'arrête avant le footer */
+            height: 78vh; /* S'arrête avant le footer */
             background: #000;
             gap: 4px;
-            margin-top: 2vh;
+            margin-top: 0;
             align-content: center;
         }
 
@@ -119,13 +129,11 @@
         /* IFRAME ZOOMÉE (Crop du site CITA) */
         .cam-box iframe {
             position: absolute;
-            width: 400%;
-            height: 400%;
+            width: 300%;
+            height: 300%;
             border: none;
-            transform: scale(0.25);
+            transform: scale(0.333);
             transform-origin: top left;
-            top: -450px;
-            left: -150px;
             pointer-events: none;
         }
 
@@ -138,7 +146,7 @@
             background: rgba(0, 0, 0, 0.85);
             color: #fff;
             font-weight: 800;
-            font-size: 1.8vh;
+            font-size: 1.5vh;
             text-align: center;
             padding: 8px 0;
             z-index: 20;
@@ -252,6 +260,7 @@
 
         <!-- SLIDE 1 : MUR DE CAMÉRAS CITA -->
         <div class="slide active" id="slide-multicam">
+            <h1 class="cam-title">CAMÉRA EN DIRECT</h1>
             <div class="cam-grid">
                 <div class="cam-box">
                     <iframe src="https://www.cita.lu/fr/live-stream/a1.html" scrolling="no"></iframe>
