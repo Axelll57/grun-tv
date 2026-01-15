@@ -426,8 +426,8 @@
         function rotateBannerMessage() {
             // Si le fichier messages.js est bien chargé
             if (typeof bannerMessages !== 'undefined' && bannerMessages.length > 0) {
-                // Changer le texte
-                textElement.innerText = bannerMessages[msgIndex];
+                // Répétition x10 pour créer un flux continu sans vide
+                textElement.innerText = (bannerMessages[msgIndex] + "   ---   ").repeat(10);
 
                 // Passer au suivant pour la prochaine fois (boucle)
                 msgIndex = (msgIndex + 1) % bannerMessages.length;
