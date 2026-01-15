@@ -267,13 +267,8 @@
             font-weight: bold;
             font-size: 4vh;
             text-transform: uppercase;
-            animation: scroll-banner 20s linear infinite;
-        }
-
-        /* DÉFINITION DU MOUVEMENT (Vitesse stable basée sur %) */
-        @keyframes scroll-banner {
-            0% { left: 100%; }
-            100% { left: -120%; }
+            left: 100%;
+            /* Pas d'animation ici, elle est injectée par le JS */
         }
     </style>
 </head>
@@ -419,33 +414,43 @@
         }
 
         // =====================
-        // GESTION DU BANDEAU DÉFILANT
+        // GESTION DU BANDEAU DÉFILANT (Train de Messages)
         // =====================
-        let msgIndex = 0;
-
         function startBannerLoop() {
-            // Charger les messages externes OU secours
-            let messages = (typeof bannerMessages !== 'undefined') ? bannerMessages : ["BIENVENUE CHEZ GRÜN SIGNALISATION"];
+            // 1. Récupération des messages
+            let messages = (typeof bannerMessages !== 'undefined') ? bannerMessages : [
+                "BIENVENUE CHEZ GRÜN SIGNALISATION",
+                "INFO TRAFIC FLUIDE"
+            ];
 
             const textElement = document.getElementById('dynamic-text');
             if (!textElement) return;
 
-            function updateText() {
-                // 1. On répète le texte 4 fois pour remplir l'écran (Anti-Vide)
-                let baseText = messages[msgIndex] + "   ---   ";
-                textElement.innerText = baseText.repeat(4);
+            // 2. Construction du TRAIN GÉANT
+            let fullTrain = "";
+            messages.forEach(msg => {
+                fullTrain += (msg + "   ---   ").repeat(2);
+            });
 
-                // 2. Astuce pour relancer l'animation CSS à zéro
-                textElement.style.animation = 'none';
-                void textElement.offsetWidth; // Force le reset
-                textElement.style.animation = 'scroll-banner 20s linear infinite';
+            // 3. Injection du texte
+            textElement.innerText = fullTrain;
 
-                // 3. Préparer le prochain changement
-                msgIndex = (msgIndex + 1) % messages.length;
-                setTimeout(updateText, 20000); // Changement toutes les 20s
-            }
+            // 4. Calcul de la vitesse (0.2s par caractère)
+            let duration = fullTrain.length * 0.2;
+            if (duration < 20) duration = 20;
 
-            updateText();
+            // 5. Définir l'animation CSS dynamique
+            const styleSheet = document.createElement("style");
+            styleSheet.innerHTML = `
+                @keyframes scroll-train {
+                    0% { transform: translateX(0); left: 100%; }
+                    100% { transform: translateX(-100%); left: 0; }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+
+            // 6. Lancement de l'animation
+            textElement.style.animation = `scroll-train ${duration}s linear infinite`;
         }
 
         // =====================
