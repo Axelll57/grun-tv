@@ -103,7 +103,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 10vh;
+            height: 12vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -116,45 +116,45 @@
             font-size: 5vh;
             font-family: 'Arial', sans-serif;
             font-weight: 400;
-            margin: 0;
             text-transform: uppercase;
+            margin: 0;
             letter-spacing: -1px;
         }
 
-        /* 2. LA GRILLE (Le conteneur) */
+        /* 2. GRILLE (Structure) */
         .cam-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            height: 80vh;
+            height: 72vh;
             width: 100vw;
-            margin-top: 10vh;
+            margin-top: 12vh;
             background: #000;
-            gap: 0;
+            gap: 2px;
         }
 
-        /* 3. LES CASES (Blocs individuels) */
+        /* 3. CASE INDIVIDUELLE */
         .cam-box {
             position: relative;
             overflow: hidden;
-            background: #000;
+            background: #111;
             border: 1px solid #333;
         }
 
-        /* 4. LE REGLAGE DU CADRAGE (C'est là que tout se joue) */
+        /* 4. REGLAGE VIDEO (Le nerf de la guerre) */
         .cam-box iframe {
             position: absolute;
-            width: 380%;
-            height: 380%;
+            width: 300%;
+            height: 300%;
             border: none;
-            transform: scale(0.26);
+            transform: scale(0.33);
             transform-origin: top left;
-            top: -380px;
-            left: -40px;
+            top: -160px;
+            left: -20px;
             pointer-events: none;
         }
 
-        /* 5. LES ÉTIQUETTES (Style Maquette) */
+        /* 5. ETIQUETTES (Style Maquette) */
         .cam-label {
             position: absolute;
             bottom: 0;
@@ -162,10 +162,10 @@
             width: 100%;
             background: #000;
             color: #fff;
-            font-size: 1.8vh;
+            font-size: 2vh;
             font-weight: bold;
             text-align: center;
-            padding: 8px 0;
+            padding: 10px 0;
             text-transform: uppercase;
             z-index: 30;
         }
