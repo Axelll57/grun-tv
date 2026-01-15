@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grün Signalisation - Affichage Dynamique</title>
     <style>
-        /* 0. RESET GLOBAL ET FOND NOIR PUR */
+        /* 0. RESET GLOBAL ET FOND GRIS 'CITA' */
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +13,7 @@
         }
 
         html, body {
-            background-color: #000000;
+            background-color: #1a1a1a;
             margin: 0;
             padding: 0;
             overflow: hidden;
@@ -29,7 +29,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background-color: #000000;
+            background-color: #1a1a1a;
         }
 
         /* Overlay de transition (fondu au noir) */
@@ -63,7 +63,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000000;
+            background-color: #1a1a1a;
         }
 
         .slide.active {
@@ -100,7 +100,7 @@
         /* GRILLE MULTI-CAMÉRAS CITA */
         /* ===================== */
 
-        /* 1. HEADER (Titre) */
+        /* 1. HEADER (Titre sur fond gris) */
         .header-cam {
             position: absolute;
             top: 0;
@@ -110,9 +110,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #000000;
+            background-color: #1a1a1a;
             z-index: 20;
-            border: none;
         }
 
         .header-cam h1 {
@@ -123,9 +122,10 @@
             text-transform: uppercase;
             margin: 0;
             letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* 2. GRILLE (Conteneur) */
+        /* 2. GRILLE */
         .cam-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -133,7 +133,7 @@
             height: 72vh;
             width: 100vw;
             margin-top: 12vh;
-            background-color: #000000;
+            background-color: #1a1a1a;
             gap: 4px;
         }
 
@@ -141,11 +141,11 @@
         .cam-box {
             position: relative;
             overflow: hidden;
-            background-color: #000000;
-            border: 1px solid #111;
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
         }
 
-        /* 4. REGLAGES IFRAME DE BASE (Communs à tous) */
+        /* 4. CONFIGURATION DE BASE IFRAME */
         .cam-box iframe {
             position: absolute;
             width: 1920px;
@@ -155,45 +155,45 @@
             pointer-events: none;
         }
 
-        /* ===== REGLAGES INDIVIDUELS (Chirurgie) ===== */
+        /* ===== REGLAGES INDIVIDUELS (Recentrage Gauche & Hauteur) ===== */
 
-        /* CAM 1 : A1 (Était trop bas -> On remonte fort) */
+        /* CAM 1 : A1 (Centrage + Hauteur OK) */
         .cam-box:nth-child(1) iframe {
-            transform: scale(0.60) translate(-200px, -160px);
+            transform: scale(0.60) translate(-550px, -160px);
         }
 
-        /* CAM 2 : A3 (Était trop haut -> On descend) */
+        /* CAM 2 : A3 (Centrage + Descendre beaucoup pour cacher le header) */
         .cam-box:nth-child(2) iframe {
-            transform: scale(0.60) translate(-200px, -60px);
+            transform: scale(0.60) translate(-550px, -160px);
         }
 
-        /* CAM 3 : A4 (Barre blanche en haut -> On remonte) */
+        /* CAM 3 : A4 (Centrage + Descendre un tout petit peu) */
         .cam-box:nth-child(3) iframe {
-            transform: scale(0.60) translate(-200px, -150px);
+            transform: scale(0.60) translate(-550px, -170px);
         }
 
-        /* CAM 4 : A6 (À ajuster légèrement) */
+        /* CAM 4 : A6 (Centrage + Descendre un tout petit peu) */
         .cam-box:nth-child(4) iframe {
-            transform: scale(0.60) translate(-200px, -120px);
+            transform: scale(0.60) translate(-550px, -140px);
         }
 
-        /* CAM 5 : A7 (À ajuster légèrement) */
+        /* CAM 5 : A7 (Centrage + Descendre un tout petit peu) */
         .cam-box:nth-child(5) iframe {
-            transform: scale(0.60) translate(-200px, -120px);
+            transform: scale(0.60) translate(-550px, -140px);
         }
 
-        /* CAM 6 : A13 (Barre blanche en haut -> On remonte) */
+        /* CAM 6 : A13 (Centrage + Descendre un tout petit peu) */
         .cam-box:nth-child(6) iframe {
-            transform: scale(0.60) translate(-200px, -150px);
+            transform: scale(0.60) translate(-550px, -170px);
         }
 
-        /* 5. ETIQUETTES */
+        /* 5. ETIQUETTES (Fond gris) */
         .cam-label {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: #000000;
+            background: #1a1a1a;
             color: #fff;
             font-size: 2.2vh;
             font-weight: bold;
@@ -201,6 +201,7 @@
             padding: 12px 0;
             text-transform: uppercase;
             z-index: 30;
+            border-top: 2px solid #e30613;
         }
 
         /* ===================== */
