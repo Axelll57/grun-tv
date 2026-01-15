@@ -94,6 +94,55 @@
         }
 
         /* ===================== */
+        /* GRILLE MULTI-CAMÉRAS CITA */
+        /* ===================== */
+        .cam-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            width: 100vw;
+            height: 91vh; /* S'arrête avant le footer */
+            background: #000;
+            gap: 4px;
+            padding-top: 10px;
+        }
+
+        .cam-box {
+            position: relative;
+            overflow: hidden;
+            background: #222;
+            border-radius: 8px;
+            margin: 2px;
+        }
+
+        /* IFRAME ZOOMÉE (Crop du site CITA) */
+        .cam-box iframe {
+            position: absolute;
+            width: 400%;
+            height: 400%;
+            border: none;
+            transform: scale(0.25) translate(-37%, -45%);
+            transform-origin: 0 0;
+            pointer-events: none;
+        }
+
+        /* ETIQUETTE (Nom de l'autoroute) */
+        .cam-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.8vh;
+            text-align: center;
+            padding: 8px 0;
+            z-index: 10;
+            border-top: 2px solid #e30613;
+        }
+
+        /* ===================== */
         /* FOOTER / BANDEAU ROUGE STYLE ONGLET */
         /* ===================== */
         #footer {
@@ -198,8 +247,38 @@
         <!-- Overlay fondu au noir -->
         <div id="fade-overlay"></div>
 
-        <!-- SLIDE 1 : MÉTÉO (MeteoTV Officiel) -->
-        <div id="slide-meteo" class="slide active">
+        <!-- SLIDE 1 : MUR DE CAMÉRAS CITA -->
+        <div class="slide active" id="slide-multicam">
+            <div class="cam-grid">
+                <div class="cam-box">
+                    <iframe src="https://www.cita.lu/fr/live-stream/a1.html" scrolling="no"></iframe>
+                    <div class="cam-label">A1 - TRÈVES / LUX</div>
+                </div>
+                <div class="cam-box">
+                    <iframe src="https://www.cita.lu/fr/live-stream/a3.html" scrolling="no"></iframe>
+                    <div class="cam-label">A3 - FRANCE (METZ)</div>
+                </div>
+                <div class="cam-box">
+                    <iframe src="https://www.cita.lu/fr/live-stream/a4.html" scrolling="no"></iframe>
+                    <div class="cam-label">A4 - ESCH-SUR-ALZETTE</div>
+                </div>
+                <div class="cam-box">
+                    <iframe src="https://www.cita.lu/fr/live-stream/a6.html" scrolling="no"></iframe>
+                    <div class="cam-label">A6 - BELGIQUE (ARLON)</div>
+                </div>
+                <div class="cam-box">
+                    <iframe src="https://www.cita.lu/fr/live-stream/a7.html" scrolling="no"></iframe>
+                    <div class="cam-label">A7 - NORD (MERSCH)</div>
+                </div>
+                <div class="cam-box">
+                    <iframe src="https://www.cita.lu/fr/live-stream/a13.html" scrolling="no"></iframe>
+                    <div class="cam-label">A13 - LIAISON SUD</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 : MÉTÉO (MeteoTV Officiel) -->
+        <div id="slide-meteo" class="slide">
             <iframe
                 src="https://www.meteoblue.com/fr/meteotv/691358"
                 frameborder="0"
@@ -271,6 +350,7 @@
         // =====================
         // CONFIGURATION
         // =====================
+        const MULTICAM_DURATION = 15000; // 15 secondes
         const METEO_DURATION = 10000;    // 10 secondes
         const TRAFIC_DURATION = 10000;   // 10 secondes
 
@@ -285,6 +365,7 @@
         // =====================
         // ÉLÉMENTS DOM
         // =====================
+        const slideMulticam = document.getElementById('slide-multicam');
         const slideMeteo = document.getElementById('slide-meteo');
         const slideTrafic = document.getElementById('slide-trafic');
         const slideVideo = document.getElementById('slide-video');
@@ -294,12 +375,13 @@
         // ÉTAT
         // =====================
         let currentVideoIndex = 0;
-        let currentSlide = 'meteo'; // 'meteo', 'trafic', 'video'
+        let currentSlide = 'multicam'; // 'multicam', 'meteo', 'trafic', 'video'
 
         // =====================
         // FONCTIONS UTILITAIRES
         // =====================
         function hideAllSlides() {
+            slideMulticam.classList.remove('active');
             slideMeteo.classList.remove('active');
             slideTrafic.classList.remove('active');
             slideVideo.classList.remove('active');
@@ -308,6 +390,16 @@
         // =====================
         // FONCTIONS DE NAVIGATION
         // =====================
+
+        // Afficher le slide Multicam (Caméras CITA)
+        function showMulticam() {
+            hideAllSlides();
+            slideMulticam.classList.add('active');
+            currentSlide = 'multicam';
+
+            // Après 15s, passer à la météo
+            setTimeout(showMeteo, MULTICAM_DURATION);
+        }
 
         // Afficher le slide Météo
         function showMeteo() {
@@ -351,8 +443,8 @@
         // Gérer la fin d'une vidéo
         function handleVideoEnd() {
             if (currentVideoIndex === 0) {
-                // On a fait le tour des 4 vidéos, retour à la météo
-                showMeteo();
+                // On a fait le tour des 4 vidéos, retour aux caméras
+                showMulticam();
             } else {
                 // Vidéo suivante
                 playNextVideo();
@@ -374,10 +466,10 @@
         // =====================
         function init() {
             console.log('Grün Signalisation - Diaporama initialisé');
-            console.log('Séquence: Météo (10s) > Trafic (10s) > Vidéo3 > Vidéo1 > Vidéo4 > Vidéo2 > Boucle');
+            console.log('Séquence: Multicam (15s) > Météo (10s) > Trafic (10s) > Vidéo3 > Vidéo1 > Vidéo4 > Vidéo2 > Boucle');
 
-            // Commencer par la météo pendant 10 secondes
-            setTimeout(showTrafic, METEO_DURATION);
+            // Commencer par les caméras CITA pendant 15 secondes
+            setTimeout(showMeteo, MULTICAM_DURATION);
         }
 
         // Lancer au chargement
