@@ -213,100 +213,66 @@
         }
 
         /* ===================== */
-        /* FOOTER / BANDEAU ROUGE STYLE ONGLET */
+        /* FOOTER / BANDEAU ROUGE PRO */
         /* ===================== */
-        #footer {
+
+        /* CONTENEUR PRINCIPAL DU BANDEAU */
+        #footer-bar {
             position: fixed;
             bottom: 0;
-            left: 60px;
-            right: 60px;
-            width: auto;
-            height: 9vh;
-            background-color: #e30613;
-            color: white;
-            display: flex;
-            align-items: center;
-            z-index: 9999;
-            border-radius: 30px 30px 0 0;
-            overflow: hidden;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Container du texte défilant avec fondu sur les bords */
-        .marquee-wrapper {
-            flex: 1;
-            overflow: hidden;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        /* Fondu gauche */
-        .marquee-wrapper::before {
-            content: '';
-            position: absolute;
             left: 0;
-            top: 0;
-            width: 60px;
-            height: 100%;
-            background: linear-gradient(to right, #e30613 0%, transparent 100%);
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        /* Fondu droite */
-        .marquee-wrapper::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 60px;
-            height: 100%;
-            background: linear-gradient(to left, #e30613 0%, transparent 100%);
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        /* Animation du défilement */
-        .marquee-track {
+            width: 100%;
+            height: 10vh;
+            background: #e30613;
             display: flex;
             align-items: center;
-            animation: scroll-left 25s linear infinite;
-            white-space: nowrap;
-            padding-left: 60px;
+            z-index: 100;
+            border-top: 4px solid white;
         }
 
-        /* Élément répété dans le marquee - espacements équilibrés */
-        .marquee-item {
-            display: inline-flex;
+        /* 1. LOGO FIXE (À GAUCHE) */
+        .footer-logo {
+            width: 15vw;
+            height: 100%;
+            background: #e30613;
+            display: flex;
             align-items: center;
-            gap: 30px;
-            margin-right: 50px;
+            justify-content: center;
+            z-index: 110;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
         }
 
-        .marquee-text {
-            color: #ffffff;
-            font-size: 2.2vh;
-            font-weight: 700;
+        .footer-logo img {
+            max-height: 80%;
+            max-width: 90%;
+            object-fit: contain;
+        }
+
+        /* 2. ZONE DE TEXTE (LE RESTE) */
+        .footer-text-area {
+            width: 85vw;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        /* L'ANIMATION DE DÉFILEMENT */
+        .scrolling-text {
+            white-space: nowrap;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 3.5vh;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            animation: scroll-left 20s linear infinite;
         }
 
-        /* Logo défilant */
-        .marquee-logo {
-            height: 6vh;
-            vertical-align: middle;
-            filter: brightness(0) invert(1);
-        }
-
+        /* DÉFINITION DU MOUVEMENT */
         @keyframes scroll-left {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-150%); }
         }
     </style>
 </head>
@@ -387,49 +353,23 @@
         </div>
     </div>
 
-    <!-- FOOTER / BANDEAU ROUGE FLOTTANT -->
-    <footer id="footer">
-        <!-- Texte défilant bilingue FR/LU -->
-        <div class="marquee-wrapper">
-            <div class="marquee-track">
-                <!-- Séquence 1 -->
-                <div class="marquee-item">
-                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
-                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
-                </div>
-                <div class="marquee-item">
-                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
-                    <span class="marquee-text">WËLLKOMM BEI GRÜN SIGNALISATION</span>
-                </div>
-                <!-- Séquence 2 -->
-                <div class="marquee-item">
-                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
-                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
-                </div>
-                <div class="marquee-item">
-                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
-                    <span class="marquee-text">WËLLKOMM BEI GRÜN SIGNALISATION</span>
-                </div>
-                <!-- Duplication pour boucle fluide -->
-                <div class="marquee-item">
-                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
-                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
-                </div>
-                <div class="marquee-item">
-                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
-                    <span class="marquee-text">WËLLKOMM BEI GRÜN SIGNALISATION</span>
-                </div>
-                <div class="marquee-item">
-                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
-                    <span class="marquee-text">BIENVENUE CHEZ GRÜN SIGNALISATION</span>
-                </div>
-                <div class="marquee-item">
-                    <img src="assets/logo_grun.png" alt="Grün" class="marquee-logo">
-                    <span class="marquee-text">WËLLKOMM BEI GRÜN SIGNALISATION</span>
-                </div>
+    <!-- FOOTER / BANDEAU ROUGE PRO -->
+    <div id="footer-bar">
+        <!-- Logo fixe à gauche -->
+        <div class="footer-logo">
+            <img src="assets/logo_grun.png" alt="Logo Grün">
+        </div>
+
+        <!-- Texte défilant à droite -->
+        <div class="footer-text-area">
+            <div class="scrolling-text" id="dynamic-text">
+                Chargement...
             </div>
         </div>
-    </footer>
+    </div>
+
+    <!-- Chargement des messages externes -->
+    <script src="assets/messages.js"></script>
 
     <!-- SCRIPT PRINCIPAL -->
     <script>
@@ -478,6 +418,28 @@
         }
 
         // =====================
+        // GESTION DU BANDEAU DÉFILANT
+        // =====================
+        let msgIndex = 0;
+        const textElement = document.getElementById('dynamic-text');
+
+        function rotateBannerMessage() {
+            // Si le fichier messages.js est bien chargé
+            if (typeof bannerMessages !== 'undefined' && bannerMessages.length > 0) {
+                // Changer le texte
+                textElement.innerText = bannerMessages[msgIndex];
+
+                // Passer au suivant pour la prochaine fois (boucle)
+                msgIndex = (msgIndex + 1) % bannerMessages.length;
+
+                // Reset l'animation pour qu'elle reparte du début
+                textElement.style.animation = 'none';
+                textElement.offsetHeight; /* Force le recalcul (reflow) */
+                textElement.style.animation = 'scroll-left 20s linear infinite';
+            }
+        }
+
+        // =====================
         // INITIALISATION
         // =====================
         function init() {
@@ -486,6 +448,10 @@
 
             // Démarrer avec le premier slide (Météo)
             showSlide(0);
+
+            // Démarrer le bandeau défilant
+            rotateBannerMessage();
+            setInterval(rotateBannerMessage, 20000);
         }
 
         // Lancer au chargement
