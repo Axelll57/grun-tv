@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grün Signalisation - Affichage Dynamique</title>
+    <link rel="icon" href="assets/logo_grun.png" type="image/png">
     <style>
         /* 0. RESET GLOBAL ET FOND GRIS 'CITA' */
         * {
@@ -441,12 +442,7 @@
 
             // 5. Définir l'animation CSS dynamique
             const styleSheet = document.createElement("style");
-            styleSheet.innerHTML = `
-                @keyframes scroll-train {
-                    0% { transform: translateX(0); left: 100%; }
-                    100% { transform: translateX(-100%); left: 0; }
-                }
-            `;
+            styleSheet.innerHTML = "@keyframes scroll-train { 0% { transform: translateX(0); left: 100%; } 100% { transform: translateX(-100%); left: 0; } }";
             document.head.appendChild(styleSheet);
 
             // 6. Lancement de l'animation
