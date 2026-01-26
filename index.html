@@ -364,8 +364,8 @@
         .horloge-bottom {
             height: 48vh;
             padding: 2vh 5vw;
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 2px solid #444;
+            background: transparent;
+            border: none;
         }
 
         .conges-title {
@@ -393,8 +393,9 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 1.5vh;
+            gap: 0;
             animation: scrollConges 25s linear infinite;
+            animation-delay: 2s;
         }
 
         @keyframes scrollConges {
@@ -411,8 +412,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.8vh 2.5vw;
-            background: transparent;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            margin-bottom: 1.2vh;
         }
 
         .conges-name {
