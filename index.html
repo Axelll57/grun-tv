@@ -107,18 +107,19 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 12vh;
+            height: 14vh;
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            padding-bottom: 2vh;
+            padding-top: 1vh;
             background-color: #1a1a1a;
             z-index: 20;
         }
 
         .header-cam h1 {
             color: white;
-            font-size: 7vh;
+            font-size: 6vh;
             font-family: 'Arial', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
@@ -127,14 +128,51 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
+        /* Indicateur LIVE */
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+            margin-top: 1vh;
+        }
+
+        .live-dot {
+            width: 1.5vh;
+            height: 1.5vh;
+            background-color: #e30613;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #e30613, 0 0 16px rgba(227, 6, 19, 0.5);
+            animation: pulseLive 1.5s ease-in-out infinite;
+        }
+
+        .live-text {
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-size: 2.2vh;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        @keyframes pulseLive {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.85);
+            }
+        }
+
         /* 2. GRILLE */
         .cam-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            height: 70vh;
+            height: 68vh;
             width: 100vw;
-            margin-top: 12vh;
+            margin-top: 14vh;
             background-color: #1a1a1a;
             gap: 4px;
         }
@@ -528,6 +566,10 @@
         <div class="slide" id="slide-cita" data-duration="15000">
             <div class="header-cam">
                 <h1>CAMÉRAS EN DIRECT</h1>
+                <div class="live-indicator">
+                    <span class="live-dot"></span>
+                    <span class="live-text">EN DIRECT</span>
+                </div>
             </div>
             <div class="cam-grid">
                 <div class="cam-box">
