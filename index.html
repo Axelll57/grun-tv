@@ -281,7 +281,8 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0d0d0d 100%);
+            background:
+                radial-gradient(ellipse at center, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%);
             padding-bottom: 10vh;
         }
 
@@ -295,56 +296,114 @@
             padding-top: 2vh;
         }
 
+        /* Conteneur Flip-Flap */
         .horloge-digital {
+            display: flex;
+            align-items: center;
+            gap: 1.5vw;
+        }
+
+        /* Groupe de 2 chiffres (HH, MM, SS) */
+        .flip-group {
+            display: flex;
+            gap: 0.5vw;
+        }
+
+        /* Carte individuelle pour chaque chiffre */
+        .flip-card {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 1.5vh 2vw;
+            box-shadow:
+                inset 0 2px 4px rgba(0,0,0,0.8),
+                0 4px 8px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        /* Ligne horizontale au milieu (effet volet) */
+        .flip-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(0,0,0,0.6);
+            box-shadow: 0 1px 0 rgba(60,60,60,0.3);
+        }
+
+        .flip-card span {
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 22vh;
+            font-size: 18vh;
             font-weight: bold;
             color: #ffffff;
-            text-shadow:
-                0 0 20px rgba(255, 255, 255, 0.5),
-                0 0 40px rgba(227, 6, 19, 0.3);
-            letter-spacing: 0.05em;
-            background: linear-gradient(180deg, #ffffff 0%, #cccccc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            line-height: 1;
+            display: block;
+        }
+
+        /* Séparateur : entre les groupes */
+        .flip-separator {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 14vh;
+            font-weight: bold;
+            color: #666;
+            line-height: 1;
         }
 
         .horloge-date {
             font-family: 'Arial', sans-serif;
-            font-size: 5vh;
-            color: #888888;
+            font-size: 4.5vh;
+            color: #999;
             text-transform: uppercase;
-            letter-spacing: 0.3em;
-            margin-top: 1vh;
+            letter-spacing: 0.4em;
+            margin-top: 3vh;
         }
 
         /* Zone basse : Congés */
         .horloge-bottom {
-            height: 38vh;
+            height: 36vh;
             padding: 2vh 5vw;
-            background: rgba(0, 0, 0, 0.4);
-            border-top: 3px solid #e30613;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 2px solid #444;
         }
 
         .conges-title {
             font-family: 'Arial', sans-serif;
-            font-size: 4vh;
-            color: #e30613;
+            font-size: 3.5vh;
+            color: #ffffff;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 2vh;
+            letter-spacing: 0.3em;
+            margin-bottom: 1.5vh;
             text-align: center;
             font-weight: bold;
         }
 
+        /* Conteneur avec overflow hidden pour le scroll */
+        .conges-wrapper {
+            height: 26vh;
+            overflow: hidden;
+            position: relative;
+            max-width: 75vw;
+            margin: 0 auto;
+        }
+
+        /* Liste avec animation de défilement */
         .conges-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 1.2vh;
-            max-width: 80vw;
-            margin: 0 auto;
+            gap: 1vh;
+            animation: scrollConges 20s linear infinite;
+        }
+
+        @keyframes scrollConges {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-50%);
+            }
         }
 
         .conges-item {
@@ -352,14 +411,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.2vh 2vw;
-            background: rgba(20, 20, 20, 0.9);
-            border-left: 4px solid #e30613;
+            background: rgba(30, 30, 30, 0.9);
+            border-left: 3px solid #555;
             border-radius: 0 4px 4px 0;
         }
 
         .conges-name {
             font-family: 'Arial', sans-serif;
-            font-size: 2.8vh;
+            font-size: 2.5vh;
             color: #ffffff;
             font-weight: bold;
             text-transform: uppercase;
@@ -367,8 +426,8 @@
 
         .conges-date {
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 2.6vh;
-            color: #ffd700;
+            font-size: 2.4vh;
+            color: #ffffff;
             font-weight: bold;
             letter-spacing: 0.05em;
         }
@@ -386,16 +445,36 @@
             <div class="horloge-container">
                 <!-- Zone Horloge (haut) -->
                 <div class="horloge-top">
-                    <div class="horloge-digital" id="horloge-time">00:00:00</div>
+                    <div class="horloge-digital" id="horloge-time">
+                        <!-- Heures -->
+                        <div class="flip-group">
+                            <div class="flip-card"><span id="h1">0</span></div>
+                            <div class="flip-card"><span id="h2">0</span></div>
+                        </div>
+                        <span class="flip-separator">:</span>
+                        <!-- Minutes -->
+                        <div class="flip-group">
+                            <div class="flip-card"><span id="m1">0</span></div>
+                            <div class="flip-card"><span id="m2">0</span></div>
+                        </div>
+                        <span class="flip-separator">:</span>
+                        <!-- Secondes -->
+                        <div class="flip-group">
+                            <div class="flip-card"><span id="s1">0</span></div>
+                            <div class="flip-card"><span id="s2">0</span></div>
+                        </div>
+                    </div>
                     <div class="horloge-date" id="horloge-date">Lundi 1 Janvier 2026</div>
                 </div>
 
                 <!-- Zone Congés (bas) -->
                 <div class="horloge-bottom">
                     <h2 class="conges-title">PROCHAINS CONGÉS</h2>
-                    <ul class="conges-list" id="conges-list">
-                        <!-- Rempli dynamiquement par JS -->
-                    </ul>
+                    <div class="conges-wrapper">
+                        <ul class="conges-list" id="conges-list">
+                            <!-- Rempli dynamiquement par JS -->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -570,7 +649,7 @@
         }
 
         // =====================
-        // HORLOGE TEMPS RÉEL
+        // HORLOGE TEMPS RÉEL (Flip-Flap)
         // =====================
         function updateHorloge() {
             const now = new Date();
@@ -579,7 +658,21 @@
             const heures = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const secondes = String(now.getSeconds()).padStart(2, '0');
-            const timeStr = `${heures}:${minutes}:${secondes}`;
+
+            // Mise à jour des cartes individuelles
+            const h1 = document.getElementById('h1');
+            const h2 = document.getElementById('h2');
+            const m1 = document.getElementById('m1');
+            const m2 = document.getElementById('m2');
+            const s1 = document.getElementById('s1');
+            const s2 = document.getElementById('s2');
+
+            if (h1) h1.textContent = heures[0];
+            if (h2) h2.textContent = heures[1];
+            if (m1) m1.textContent = minutes[0];
+            if (m2) m2.textContent = minutes[1];
+            if (s1) s1.textContent = secondes[0];
+            if (s2) s2.textContent = secondes[1];
 
             // Formatage de la date
             const jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
@@ -590,10 +683,8 @@
             const annee = now.getFullYear();
             const dateStr = `${jour} ${numJour} ${nomMois} ${annee}`;
 
-            // Mise à jour du DOM
-            const timeEl = document.getElementById('horloge-time');
+            // Mise à jour de la date
             const dateEl = document.getElementById('horloge-date');
-            if (timeEl) timeEl.textContent = timeStr;
             if (dateEl) dateEl.textContent = dateStr;
         }
 
@@ -630,16 +721,16 @@
             // Trier par date de début
             congesFuturs.sort((a, b) => new Date(a.debut) - new Date(b.debut));
 
-            // Prendre les 5 premiers
-            const congesAAfficher = congesFuturs.slice(0, 5);
-
-            // Générer le HTML
-            listEl.innerHTML = congesAAfficher.map(conge => `
+            // Générer le HTML pour tous les congés filtrés
+            const congesHTML = congesFuturs.map(conge => `
                 <li class="conges-item">
                     <span class="conges-name">${conge.nom}</span>
                     <span class="conges-date">${conge.affichage}</span>
                 </li>
             `).join('');
+
+            // Dupliquer la liste pour un défilement en boucle sans coupure
+            listEl.innerHTML = congesHTML + congesHTML;
         }
 
         // =====================
