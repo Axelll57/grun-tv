@@ -439,6 +439,17 @@
             font-weight: bold;
             letter-spacing: 0.05em;
         }
+
+        /* Congé en cours - surbrillance rouge */
+        .conges-item.current-holiday {
+            background: linear-gradient(90deg, rgba(227, 6, 19, 0.3) 0%, transparent 100%);
+            border-left: 4px solid #e30613;
+            padding-left: calc(2.5vw - 4px);
+        }
+
+        .conges-item.current-holiday .conges-name {
+            color: #ff4444;
+        }
     </style>
 </head>
 <body>
@@ -730,12 +741,23 @@
             congesFuturs.sort((a, b) => new Date(a.debut) - new Date(b.debut));
 
             // Générer le HTML pour tous les congés filtrés
-            const congesHTML = congesFuturs.map(conge => `
-                <li class="conges-item">
+            const congesHTML = congesFuturs.map(conge => {
+                // Vérifier si le congé est en cours
+                const dateDebut = new Date(conge.debut);
+                const dateFin = new Date(conge.fin);
+                dateDebut.setHours(0, 0, 0, 0);
+                dateFin.setHours(23, 59, 59, 999);
+
+                const isEnCours = aujourdhui >= dateDebut && aujourdhui <= dateFin;
+                const classeEnCours = isEnCours ? ' current-holiday' : '';
+
+                return `
+                <li class="conges-item${classeEnCours}">
                     <span class="conges-name">${conge.nom}</span>
                     <span class="conges-date">${conge.affichage}</span>
                 </li>
-            `).join('');
+                `;
+            }).join('');
 
             // Dupliquer la liste pour un défilement en boucle sans coupure
             listEl.innerHTML = congesHTML + congesHTML;
