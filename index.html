@@ -286,14 +286,14 @@
             padding-bottom: 10vh;
         }
 
-        /* Zone haute : Horloge */
+        /* Zone haute : Horloge (40%) */
         .horloge-top {
-            flex: 1;
+            height: 32vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding-top: 2vh;
+            padding-top: 1vh;
         }
 
         /* Conteneur Flip-Flap */
@@ -335,7 +335,7 @@
 
         .flip-card span {
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 18vh;
+            font-size: 13vh;
             font-weight: bold;
             color: #ffffff;
             line-height: 1;
@@ -345,7 +345,7 @@
         /* Séparateur : entre les groupes */
         .flip-separator {
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 14vh;
+            font-size: 10vh;
             font-weight: bold;
             color: #666;
             line-height: 1;
@@ -353,16 +353,16 @@
 
         .horloge-date {
             font-family: 'Arial', sans-serif;
-            font-size: 4.5vh;
+            font-size: 3.5vh;
             color: #999;
             text-transform: uppercase;
             letter-spacing: 0.4em;
-            margin-top: 3vh;
+            margin-top: 1.5vh;
         }
 
-        /* Zone basse : Congés */
+        /* Zone basse : Congés (60%) */
         .horloge-bottom {
-            height: 36vh;
+            height: 48vh;
             padding: 2vh 5vw;
             background: rgba(0, 0, 0, 0.3);
             border-top: 2px solid #444;
@@ -370,7 +370,7 @@
 
         .conges-title {
             font-family: 'Arial', sans-serif;
-            font-size: 3.5vh;
+            font-size: 4vh;
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 0.3em;
@@ -381,10 +381,10 @@
 
         /* Conteneur avec overflow hidden pour le scroll */
         .conges-wrapper {
-            height: 26vh;
+            height: 38vh;
             overflow: hidden;
             position: relative;
-            max-width: 75vw;
+            max-width: 80vw;
             margin: 0 auto;
         }
 
@@ -393,8 +393,8 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 1vh;
-            animation: scrollConges 20s linear infinite;
+            gap: 1.5vh;
+            animation: scrollConges 25s linear infinite;
         }
 
         @keyframes scrollConges {
@@ -410,15 +410,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.2vh 2vw;
+            padding: 1.8vh 2.5vw;
             background: rgba(30, 30, 30, 0.9);
-            border-left: 3px solid #555;
+            border-left: 4px solid #555;
             border-radius: 0 4px 4px 0;
         }
 
         .conges-name {
             font-family: 'Arial', sans-serif;
-            font-size: 2.5vh;
+            font-size: 3.5vh;
             color: #ffffff;
             font-weight: bold;
             text-transform: uppercase;
@@ -426,7 +426,7 @@
 
         .conges-date {
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 2.4vh;
+            font-size: 3.2vh;
             color: #ffffff;
             font-weight: bold;
             letter-spacing: 0.05em;
@@ -440,8 +440,8 @@
         <!-- Overlay fondu au noir -->
         <div id="fade-overlay"></div>
 
-        <!-- SLIDE 0 : INFOS & HORLOGE (10s) -->
-        <div class="slide active" id="slide-horloge" data-duration="10000">
+        <!-- SLIDE 0 : INFOS & HORLOGE (15s) -->
+        <div class="slide active" id="slide-horloge" data-duration="15000">
             <div class="horloge-container">
                 <!-- Zone Horloge (haut) -->
                 <div class="horloge-top">
