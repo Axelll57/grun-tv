@@ -283,17 +283,20 @@
             flex-direction: column;
             background:
                 radial-gradient(ellipse at center, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%);
-            padding-bottom: 10vh;
+            padding-bottom: 0;
         }
 
         /* Zone haute : Horloge (40%) */
         .horloge-top {
-            height: 32vh;
+            height: 28vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding-top: 1vh;
+            padding-bottom: 2vh;
+            margin-bottom: 2vh;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         /* Conteneur Flip-Flap */
@@ -362,8 +365,9 @@
 
         /* Zone basse : Congés (60%) */
         .horloge-bottom {
-            height: 48vh;
-            padding: 2vh 5vw;
+            height: 58vh;
+            padding: 0 5vw;
+            margin-bottom: 0;
             background: transparent;
             border: none;
         }
@@ -381,7 +385,7 @@
 
         /* Conteneur avec overflow hidden pour le scroll */
         .conges-wrapper {
-            height: 38vh;
+            height: 48vh;
             overflow: hidden;
             position: relative;
             max-width: 80vw;
