@@ -278,7 +278,7 @@
 
         .horloge-container {
             width: 100%;
-            height: 100%;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             background:
@@ -286,17 +286,16 @@
             padding-bottom: 0;
         }
 
-        /* Zone haute : Horloge (40%) */
+        /* Zone haute : Horloge (taille fixe) */
         .horloge-top {
-            height: 28vh;
+            flex: 0 0 auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding-top: 1vh;
-            padding-bottom: 2vh;
+            padding: 2vh 0 2vh 0;
             margin-bottom: 2vh;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         /* Conteneur Flip-Flap */
@@ -338,7 +337,7 @@
 
         .flip-card span {
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 13vh;
+            font-size: 11vh;
             font-weight: bold;
             color: #ffffff;
             line-height: 1;
@@ -348,7 +347,7 @@
         /* Séparateur : entre les groupes */
         .flip-separator {
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 10vh;
+            font-size: 8vh;
             font-weight: bold;
             color: #666;
             line-height: 1;
@@ -363,16 +362,19 @@
             margin-top: 1.5vh;
         }
 
-        /* Zone basse : Congés (60%) */
+        /* Zone basse : Congés (prend tout l'espace restant) */
         .horloge-bottom {
-            height: 58vh;
-            padding: 0 5vw;
-            margin-bottom: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0 5vw 10vh 5vw;
             background: transparent;
             border: none;
+            overflow: hidden;
         }
 
         .conges-title {
+            flex: 0 0 auto;
             font-family: 'Arial', sans-serif;
             font-size: 4vh;
             color: #ffffff;
@@ -385,11 +387,12 @@
 
         /* Conteneur avec overflow hidden pour le scroll */
         .conges-wrapper {
-            height: 48vh;
+            flex: 1;
             overflow: hidden;
             position: relative;
             max-width: 80vw;
             margin: 0 auto;
+            width: 100%;
         }
 
         /* Liste avec animation de défilement */
