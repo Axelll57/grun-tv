@@ -577,12 +577,12 @@
 
         <!-- SLIDE 3 : VIDÉO 3 -->
         <div class="slide video-slide">
-            <video src="assets/video3.mp4" muted playsinline></video>
+            <video src="assets/video3.mp4" muted playsinline preload="auto"></video>
         </div>
 
         <!-- SLIDE 4 : VIDÉO 1 -->
         <div class="slide video-slide">
-            <video src="assets/video1.mp4" muted playsinline></video>
+            <video src="assets/video1.mp4" muted playsinline preload="auto"></video>
         </div>
 
         <!-- SLIDE 5 : CAMÉRAS CITA (15s) -->
@@ -624,12 +624,12 @@
 
         <!-- SLIDE 6 : VIDÉO 4 -->
         <div class="slide video-slide">
-            <video src="assets/video4.mp4" muted playsinline></video>
+            <video src="assets/video4.mp4" muted playsinline preload="auto"></video>
         </div>
 
         <!-- SLIDE 7 : VIDÉO 2 -->
         <div class="slide video-slide">
-            <video src="assets/video2.mp4" muted playsinline></video>
+            <video src="assets/video2.mp4" muted playsinline preload="auto"></video>
         </div>
     </div>
 
@@ -852,6 +852,24 @@
 
         // Lancer au chargement
         window.addEventListener('load', init);
+
+        // =====================
+        // FORCE LECTURE VIDÉOS (anti-freeze)
+        // =====================
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                // Forcer le chargement
+                video.load();
+                // Tenter de lancer la lecture (sera gérée par showSlide)
+                video.play().catch(() => {
+                    // Ignorer les erreurs (normal si pas encore visible)
+                });
+                // Remettre au début
+                video.pause();
+                video.currentTime = 0;
+            });
+        });
     </script>
 </body>
 </html>
