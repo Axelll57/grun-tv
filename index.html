@@ -189,29 +189,27 @@
             flex-direction: column;
         }
 
-        /* 4. MASQUE VIDÉO - Fenêtre 16:9 stricte (Keyhole) */
+        /* 4. MASQUE VIDÉO - Fenêtre 16:9 stricte (Sniper) */
         .cam-box .video-wrapper {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
             overflow: hidden;
-            background-color: #000;
+            background: black;
             border-radius: 4px 4px 0 0;
             box-shadow:
                 0 4px 20px rgba(0, 0, 0, 0.8),
                 inset 0 0 0 1px rgba(255, 255, 255, 0.1);
         }
 
-        /* 5. IFRAME - Zoom numérique x3.5 */
+        /* 5. IFRAME - Méthode Sniper (taille géante + calage) */
         .cam-box iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            width: 300%;
+            height: 300%;
+            left: -100%;
+            top: -110%;
             border: none;
-            transform: scale(3.5);
-            transform-origin: center 28%;
             pointer-events: none;
         }
 
