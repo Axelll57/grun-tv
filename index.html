@@ -308,8 +308,8 @@
             font-weight: bold;
             font-size: 4vh;
             text-transform: uppercase;
-            left: 100%;
-            /* Pas d'animation ici, elle est injectée par le JS */
+            left: 0;
+            will-change: transform;
         }
 
         /* ===================== */
@@ -701,7 +701,7 @@
         // GESTION DU BANDEAU DÉFILANT (Train de Messages)
         // =====================
         function startBannerLoop() {
-            // 1. Récupération des messages
+            // 1. Récupération des messages (logique d'heure inchangée)
             let messages = (typeof bannerMessages !== 'undefined') ? bannerMessages : [
                 "BIENVENUE CHEZ GRÜN SIGNALISATION",
                 "INFO TRAFIC FLUIDE"
@@ -710,25 +710,26 @@
             const textElement = document.getElementById('dynamic-text');
             if (!textElement) return;
 
-            // 2. Construction du TRAIN GÉANT
-            let fullTrain = "";
-            messages.forEach(msg => {
-                fullTrain += (msg + "   ---   ").repeat(2);
-            });
+            // 2. Construction du TRAIN avec séparateurs
+            const separator = "   ---   ";
+            let messageTrain = messages.join(separator) + separator;
 
-            // 3. Injection du texte
+            // 3. Répéter le train 4 fois pour une boucle infinie sans interruption
+            let fullTrain = messageTrain.repeat(4);
+
+            // 4. Injection du texte
             textElement.innerText = fullTrain;
 
-            // 4. Calcul de la vitesse (0.2s par caractère)
-            let duration = fullTrain.length * 0.2;
-            if (duration < 20) duration = 20;
+            // 5. Calcul de la durée (basée sur 1 train pour une vitesse cohérente)
+            let duration = messageTrain.length * 0.15;
+            if (duration < 15) duration = 15;
 
-            // 5. Définir l'animation CSS dynamique
+            // 6. Animation CSS : défile de 25% (= 1 train sur 4) pour boucle parfaite
             const styleSheet = document.createElement("style");
-            styleSheet.innerHTML = "@keyframes scroll-train { 0% { transform: translateX(0); left: 100%; } 100% { transform: translateX(-100%); left: 0; } }";
+            styleSheet.innerHTML = "@keyframes scroll-train { 0% { transform: translateX(0); } 100% { transform: translateX(-25%); } }";
             document.head.appendChild(styleSheet);
 
-            // 6. Lancement de l'animation
+            // 7. Lancement de l'animation en boucle infinie
             textElement.style.animation = `scroll-train ${duration}s linear infinite`;
         }
 
