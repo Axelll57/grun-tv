@@ -107,26 +107,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             padding: 0;
         }
 
         /* 1. HEADER */
         .header-cam {
             width: 100%;
-            height: 12vh;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             background-color: #0d0d0d;
             z-index: 20;
-            padding-top: 1vh;
+            padding: 1.5vh 0 1vh 0;
         }
 
         .header-cam h1 {
             color: white;
-            font-size: 5vh;
+            font-size: 4.5vh;
             font-family: 'Arial', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
@@ -140,12 +140,12 @@
             display: flex;
             align-items: center;
             gap: 0.8vw;
-            margin-top: 0.8vh;
+            margin-top: 0.5vh;
         }
 
         .live-dot {
-            width: 1.8vh;
-            height: 1.8vh;
+            width: 1.6vh;
+            height: 1.6vh;
             background-color: #e30613;
             border-radius: 50%;
             box-shadow: 0 0 10px #e30613, 0 0 20px rgba(227, 6, 19, 0.5);
@@ -155,7 +155,7 @@
         .live-text {
             color: white;
             font-family: 'Arial', sans-serif;
-            font-size: 2.5vh;
+            font-size: 2vh;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -172,74 +172,63 @@
             }
         }
 
-        /* 2. GRILLE - Mur d'images professionnel */
+        /* 2. GRILLE - Mur d'images 3x2 */
         .cam-grid {
             display: grid;
-            grid-template-columns: repeat(3, 30vw);
+            grid-template-columns: repeat(3, 28vw);
             grid-template-rows: repeat(2, auto);
-            gap: 1.5vw;
-            padding: 1vh 2vw 12vh 2vw;
+            gap: 1.2vw;
+            margin-bottom: 12vh;
             justify-content: center;
             align-content: center;
         }
 
-        /* 3. CARTE CAMÉRA - Bloc solidaire */
+        /* 3. CARTE CAMÉRA - Conteneur global */
         .cam-box {
-            position: relative;
-            background-color: #000;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.6),
-                0 2px 4px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
         }
 
-        /* 4. CONTENEUR VIDÉO - Ratio 16:9 */
+        /* 4. MASQUE VIDÉO - Fenêtre 16:9 stricte (Keyhole) */
         .cam-box .video-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* Ratio 16:9 */
+            aspect-ratio: 16 / 9;
             overflow: hidden;
-            background-color: #111;
+            background-color: #000;
+            border-radius: 4px 4px 0 0;
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.8),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
         }
 
-        /* 5. IFRAME - Recadrée sur la vidéo */
+        /* 5. IFRAME - Zoom numérique x3.5 */
         .cam-box iframe {
             position: absolute;
             top: 0;
             left: 0;
-            width: 1920px;
-            height: 1080px;
+            width: 100%;
+            height: 100%;
             border: none;
-            transform-origin: top left;
+            transform: scale(3.5);
+            transform-origin: center 28%;
             pointer-events: none;
         }
 
-        /* Ajustements de cadrage - Masquage du header bleu CITA */
-        .cam-box:nth-child(1) iframe,
-        .cam-box:nth-child(2) iframe,
-        .cam-box:nth-child(3) iframe,
-        .cam-box:nth-child(4) iframe,
-        .cam-box:nth-child(5) iframe,
-        .cam-box:nth-child(6) iframe {
-            transform: scale(0.28) translate(-530px, -380px);
-        }
-
-        /* 6. BANDEAU ROUGE - Étiquette */
+        /* 6. BANDEAU ROUGE - Étiquette (hors masque) */
         .cam-label {
             width: 100%;
             background: #e30613;
             color: #fff;
             font-family: 'Arial', sans-serif;
-            font-size: 1.8vh;
+            font-size: 1.6vh;
             font-weight: bold;
             text-align: center;
-            padding: 1.2vh 0;
+            padding: 1vh 0;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin: 0;
+            border-radius: 0 0 4px 4px;
         }
 
         /* ===================== */
