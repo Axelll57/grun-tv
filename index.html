@@ -101,46 +101,51 @@
         /* GRILLE MULTI-CAMÉRAS CITA */
         /* ===================== */
 
-        /* 1. HEADER */
-        .header-cam {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 16vh;
+        /* Conteneur principal de la slide caméras */
+        #slide-cita {
+            background-color: #0d0d0d;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 1.5vh;
-            padding-bottom: 0;
-            background-color: #1a1a1a;
+            padding: 0;
+        }
+
+        /* 1. HEADER */
+        .header-cam {
+            width: 100%;
+            height: 12vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #0d0d0d;
             z-index: 20;
+            padding-top: 1vh;
         }
 
         .header-cam h1 {
             color: white;
-            font-size: 8vh;
+            font-size: 5vh;
             font-family: 'Arial', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
             margin: 0;
-            letter-spacing: 4px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 6px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
         }
 
         /* Indicateur LIVE */
         .live-indicator {
             display: flex;
             align-items: center;
-            gap: 1.2vw;
-            margin-top: auto;
-            padding-bottom: 0.5vh;
+            gap: 0.8vw;
+            margin-top: 0.8vh;
         }
 
         .live-dot {
-            width: 2.2vh;
-            height: 2.2vh;
+            width: 1.8vh;
+            height: 1.8vh;
             background-color: #e30613;
             border-radius: 50%;
             box-shadow: 0 0 10px #e30613, 0 0 20px rgba(227, 6, 19, 0.5);
@@ -150,10 +155,10 @@
         .live-text {
             color: white;
             font-family: 'Arial', sans-serif;
-            font-size: 3.5vh;
+            font-size: 2.5vh;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
         }
 
         @keyframes pulseLive {
@@ -167,29 +172,44 @@
             }
         }
 
-        /* 2. GRILLE */
+        /* 2. GRILLE - Mur d'images professionnel */
         .cam-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            height: 66vh;
-            width: 100vw;
-            margin-top: 16vh;
-            background-color: #1a1a1a;
-            gap: 4px;
+            grid-template-columns: repeat(3, 30vw);
+            grid-template-rows: repeat(2, auto);
+            gap: 1.5vw;
+            padding: 1vh 2vw 12vh 2vw;
+            justify-content: center;
+            align-content: center;
         }
 
-        /* 3. CASE INDIVIDUELLE */
+        /* 3. CARTE CAMÉRA - Bloc solidaire */
         .cam-box {
             position: relative;
+            background-color: #000;
+            border-radius: 6px;
             overflow: hidden;
-            background-color: #1a1a1a;
-            border: 1px solid #2a2a2a;
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.6),
+                0 2px 4px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
         }
 
-        /* 4. CONFIGURATION DE BASE IFRAME */
+        /* 4. CONTENEUR VIDÉO - Ratio 16:9 */
+        .cam-box .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* Ratio 16:9 */
+            overflow: hidden;
+            background-color: #111;
+        }
+
+        /* 5. IFRAME - Recadrée sur la vidéo */
         .cam-box iframe {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 1920px;
             height: 1080px;
             border: none;
@@ -197,60 +217,32 @@
             pointer-events: none;
         }
 
-        /* ===== REGLAGES VERTICAUX FINAUX ===== */
-        /* X fixé à -450px, Scale 0.66 */
-
-        /* GROUPE 1 : Descendre franchement (Y = -125px) */
-
-        /* CAM 1 : A1 */
-        .cam-box:nth-child(1) iframe {
-            transform: scale(0.66) translate(-450px, -125px);
-        }
-
-        /* CAM 2 : A3 */
-        .cam-box:nth-child(2) iframe {
-            transform: scale(0.66) translate(-450px, -125px);
-        }
-
-        /* CAM 3 : A4 */
-        .cam-box:nth-child(3) iframe {
-            transform: scale(0.66) translate(-450px, -125px);
-        }
-
-        /* GROUPE 2 : Descendre un peu moins (Y = -135px) */
-
-        /* CAM 4 : A6 */
-        .cam-box:nth-child(4) iframe {
-            transform: scale(0.66) translate(-450px, -135px);
-        }
-
-        /* CAM 5 : A7 */
-        .cam-box:nth-child(5) iframe {
-            transform: scale(0.66) translate(-450px, -135px);
-        }
-
-        /* RETOUR GROUPE 1 */
-
-        /* CAM 6 : A13 */
+        /* Ajustements de cadrage par caméra */
+        .cam-box:nth-child(1) iframe,
+        .cam-box:nth-child(2) iframe,
+        .cam-box:nth-child(3) iframe,
         .cam-box:nth-child(6) iframe {
-            transform: scale(0.66) translate(-450px, -125px);
+            transform: scale(0.28) translate(-530px, -150px);
         }
 
-        /* 5. ETIQUETTES (Fond gris) */
+        .cam-box:nth-child(4) iframe,
+        .cam-box:nth-child(5) iframe {
+            transform: scale(0.28) translate(-530px, -160px);
+        }
+
+        /* 6. BANDEAU ROUGE - Étiquette */
         .cam-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
             width: 100%;
-            background: #1a1a1a;
+            background: #e30613;
             color: #fff;
-            font-size: 2.2vh;
+            font-family: 'Arial', sans-serif;
+            font-size: 1.8vh;
             font-weight: bold;
             text-align: center;
-            padding: 12px 0;
+            padding: 1.2vh 0;
             text-transform: uppercase;
-            z-index: 30;
-            border-top: 2px solid #e30613;
+            letter-spacing: 1px;
+            margin: 0;
         }
 
         /* ===================== */
@@ -596,27 +588,39 @@
             </div>
             <div class="cam-grid">
                 <div class="cam-box">
-                    <iframe src="https://www.cita.lu/fr/live-stream/a1.html" scrolling="no"></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.cita.lu/fr/live-stream/a1.html" scrolling="no"></iframe>
+                    </div>
                     <div class="cam-label">A1 - TRÈVES / LUX</div>
                 </div>
                 <div class="cam-box">
-                    <iframe src="https://www.cita.lu/fr/live-stream/a3.html" scrolling="no"></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.cita.lu/fr/live-stream/a3.html" scrolling="no"></iframe>
+                    </div>
                     <div class="cam-label">A3 - FRANCE (METZ)</div>
                 </div>
                 <div class="cam-box">
-                    <iframe src="https://www.cita.lu/fr/live-stream/a4.html" scrolling="no"></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.cita.lu/fr/live-stream/a4.html" scrolling="no"></iframe>
+                    </div>
                     <div class="cam-label">A4 - ESCH-SUR-ALZETTE</div>
                 </div>
                 <div class="cam-box">
-                    <iframe src="https://www.cita.lu/fr/live-stream/a6.html" scrolling="no"></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.cita.lu/fr/live-stream/a6.html" scrolling="no"></iframe>
+                    </div>
                     <div class="cam-label">A6 - BELGIQUE (ARLON)</div>
                 </div>
                 <div class="cam-box">
-                    <iframe src="https://www.cita.lu/fr/live-stream/a7.html" scrolling="no"></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.cita.lu/fr/live-stream/a7.html" scrolling="no"></iframe>
+                    </div>
                     <div class="cam-label">A7 - NORD (MERSCH)</div>
                 </div>
                 <div class="cam-box">
-                    <iframe src="https://www.cita.lu/fr/live-stream/a13.html" scrolling="no"></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.cita.lu/fr/live-stream/a13.html" scrolling="no"></iframe>
+                    </div>
                     <div class="cam-label">A13 - LIAISON SUD</div>
                 </div>
             </div>
