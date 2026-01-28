@@ -523,18 +523,12 @@
         }
 
         .reseaux-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             width: 100%;
-            padding-bottom: 10vh;
-        }
-
-        .reseaux-content img {
-            max-height: 80vh;
-            max-width: 95vw;
-            object-fit: contain;
+            height: calc(100vh - 18vh);
+            background-image: url('assets/reseaux.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
     </style>
 </head>
@@ -664,9 +658,7 @@
             <div class="reseaux-header">
                 <h1>SUIVEZ-NOUS SUR NOS RÉSEAUX</h1>
             </div>
-            <div class="reseaux-content">
-                <img src="assets/reseaux.png" alt="Nos réseaux sociaux">
-            </div>
+            <div class="reseaux-content"></div>
         </div>
 
         <!-- SLIDE 7 : VIDÉO 4 -->
