@@ -606,12 +606,17 @@
             </div>
         </div>
 
-        <!-- SLIDE 1 : MÉTÉO (10s) -->
+        <!-- SLIDE 1 : VIDÉO 6 (Intro Grün) -->
+        <div class="slide video-slide">
+            <video src="assets/video6.mp4" muted playsinline preload="auto"></video>
+        </div>
+
+        <!-- SLIDE 2 : MÉTÉO (10s) -->
         <div class="slide" id="slide-meteo" data-duration="10000">
             <iframe src="https://www.meteoblue.com/fr/meteotv/691358" frameborder="0" allowfullscreen></iframe>
         </div>
 
-        <!-- SLIDE 2 : WAZE (10s) -->
+        <!-- SLIDE 3 : WAZE (10s) -->
         <div class="slide" id="slide-waze" data-duration="10000">
             <iframe
                 src="https://embed.waze.com/iframe?zoom=14&lat=49.580016&lon=6.134912&ct=livemap&pin=1"
@@ -622,17 +627,17 @@
             </iframe>
         </div>
 
-        <!-- SLIDE 3 : VIDÉO 3 -->
+        <!-- SLIDE 4 : VIDÉO 3 -->
         <div class="slide video-slide">
             <video src="assets/video3.mp4" muted playsinline preload="auto"></video>
         </div>
 
-        <!-- SLIDE 4 : VIDÉO 1 -->
+        <!-- SLIDE 5 : VIDÉO 1 -->
         <div class="slide video-slide">
             <video src="assets/video1.mp4" muted playsinline preload="auto"></video>
         </div>
 
-        <!-- SLIDE 5 : CAMÉRAS CITA (15s) -->
+        <!-- SLIDE 6 : CAMÉRAS CITA (15s) -->
         <div class="slide" id="slide-cita" data-duration="15000">
             <div class="header-cam">
                 <h1>TRAFIC AUTOROUTIER</h1>
@@ -681,7 +686,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 6 : RÉSEAUX SOCIAUX (15s) -->
+        <!-- SLIDE 7 : RÉSEAUX SOCIAUX (15s) -->
         <div class="slide" id="slide-reseaux" data-duration="15000">
             <div class="reseaux-header">
                 <h1>SUIVEZ-NOUS SUR NOS RÉSEAUX</h1>
@@ -689,17 +694,17 @@
             <div class="reseaux-content"></div>
         </div>
 
-        <!-- SLIDE 7 : VIDÉO 4 -->
+        <!-- SLIDE 8 : VIDÉO 4 -->
         <div class="slide video-slide">
             <video src="assets/video4.mp4" muted playsinline preload="auto"></video>
         </div>
 
-        <!-- SLIDE 8 : VIDÉO 2 -->
+        <!-- SLIDE 9 : VIDÉO 2 -->
         <div class="slide video-slide">
             <video src="assets/video2.mp4" muted playsinline preload="auto"></video>
         </div>
 
-        <!-- SLIDE 9 : VIDÉO 5 (dernière avant retour à l'Horloge) -->
+        <!-- SLIDE 10 : VIDÉO 5 (dernière avant retour à l'Horloge) -->
         <div class="slide video-slide">
             <video src="assets/video5.mp4?v=3" muted playsinline preload="auto"></video>
         </div>
@@ -906,7 +911,7 @@
         // =====================
         function init() {
             console.log('Grün Signalisation - Diaporama initialisé');
-            console.log('Séquence: Horloge (15s) > Météo (10s) > Waze (10s) > Video3 > Video1 > CITA (15s) > Réseaux (15s) > Video4 > Video2 > Video5 > Boucle');
+            console.log('Séquence: Horloge (15s) > Video6 > Météo (10s) > Waze (10s) > Video3 > Video1 > CITA (15s) > Réseaux (15s) > Video4 > Video2 > Video5 > Boucle');
 
             // Initialiser l'horloge
             updateHorloge();
