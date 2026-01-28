@@ -530,6 +530,34 @@
             background-repeat: no-repeat;
         }
 
+        /* ===================== */
+        /* BOUTON AUDIO FALLBACK */
+        /* ===================== */
+        #audio-fallback-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: none;
+            background: #e30613;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(227, 6, 19, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #audio-fallback-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(227, 6, 19, 0.7);
+        }
     </style>
 </head>
 <body>
@@ -538,6 +566,9 @@
     <audio id="radio-player" preload="auto">
         <source src="https://shoutcast.rtl.lu/rtl" type="audio/mpeg">
     </audio>
+
+    <!-- Bouton fallback (caché par défaut, visible si autoplay bloqué) -->
+    <button id="audio-fallback-btn">🔊 ACTIVER SON</button>
 
     <!-- Zone de contenu (slides) -->
     <div class="content-area">
@@ -921,19 +952,34 @@
         });
 
         // =====================
-        // LECTEUR RADIO RTL (arrière-plan)
+        // LECTEUR RADIO RTL (Smart Autoplay)
         // =====================
         (function() {
             const radio = document.getElementById('radio-player');
+            const fallbackBtn = document.getElementById('audio-fallback-btn');
 
             // Volume par défaut à 50% (ajustable via télécommande TV)
             radio.volume = 0.5;
 
             // Tenter l'autoplay
             radio.play().then(() => {
+                // Succès : le son démarre, bouton reste caché
                 console.log('Radio RTL démarrée avec succès');
+                fallbackBtn.style.display = 'none';
             }).catch(err => {
-                console.log('Autoplay radio bloqué par le navigateur:', err.message);
+                // Échec : autoplay bloqué, afficher le bouton
+                console.log('Autoplay radio bloqué:', err.message);
+                fallbackBtn.style.display = 'block';
+            });
+
+            // Clic sur le bouton fallback
+            fallbackBtn.addEventListener('click', function() {
+                radio.play().then(() => {
+                    console.log('Radio RTL démarrée manuellement');
+                    fallbackBtn.style.display = 'none';
+                }).catch(err => {
+                    console.error('Erreur lecture radio:', err);
+                });
             });
         })();
     </script>
