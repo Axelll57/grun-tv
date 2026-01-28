@@ -487,6 +487,55 @@
         .conges-item.current-holiday .conges-name {
             color: #ff4444;
         }
+
+        /* ===================== */
+        /* SLIDE RÉSEAUX SOCIAUX */
+        /* ===================== */
+        #slide-reseaux {
+            background-color: #0d0d0d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0;
+        }
+
+        .reseaux-header {
+            width: 100%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e30613;
+            padding: 2vh 0;
+            z-index: 20;
+        }
+
+        .reseaux-header h1 {
+            color: white;
+            font-size: 4.5vh;
+            font-family: 'Arial', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 6px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .reseaux-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding-bottom: 10vh;
+        }
+
+        .reseaux-content img {
+            max-height: 80vh;
+            max-width: 95vw;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
@@ -610,12 +659,22 @@
             </div>
         </div>
 
-        <!-- SLIDE 6 : VIDÉO 4 -->
+        <!-- SLIDE 6 : RÉSEAUX SOCIAUX (15s) -->
+        <div class="slide" id="slide-reseaux" data-duration="15000">
+            <div class="reseaux-header">
+                <h1>SUIVEZ-NOUS SUR NOS RÉSEAUX</h1>
+            </div>
+            <div class="reseaux-content">
+                <img src="assets/reseaux.png" alt="Nos réseaux sociaux">
+            </div>
+        </div>
+
+        <!-- SLIDE 7 : VIDÉO 4 -->
         <div class="slide video-slide">
             <video src="assets/video4.mp4" muted playsinline preload="auto"></video>
         </div>
 
-        <!-- SLIDE 7 : VIDÉO 2 -->
+        <!-- SLIDE 8 : VIDÉO 2 -->
         <div class="slide video-slide">
             <video src="assets/video2.mp4" muted playsinline preload="auto"></video>
         </div>
@@ -822,7 +881,7 @@
         // =====================
         function init() {
             console.log('Grün Signalisation - Diaporama initialisé');
-            console.log('Séquence: Horloge (10s) > Météo (10s) > Waze (10s) > Video3 > Video1 > CITA (15s) > Video4 > Video2 > Boucle');
+            console.log('Séquence: Horloge (15s) > Météo (10s) > Waze (10s) > Video3 > Video1 > CITA (15s) > Réseaux (15s) > Video4 > Video2 > Boucle');
 
             // Initialiser l'horloge
             updateHorloge();
