@@ -531,32 +531,24 @@
         }
 
         /* ===================== */
-        /* BOUTON AUDIO FALLBACK */
+        /* BOUTON AUDIO (Style Player) */
         /* ===================== */
-        #audio-fallback-btn {
-            display: none;
+        #audio-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 120px;
+            right: 30px;
             z-index: 9999;
-            padding: 15px 25px;
-            border-radius: 50px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             border: none;
-            background: #e30613;
+            background-color: rgba(0, 0, 0, 0.6);
             color: white;
-            font-family: 'Arial', sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(227, 6, 19, 0.5);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        #audio-fallback-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(227, 6, 19, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -567,8 +559,8 @@
         <source src="https://shoutcast.rtl.lu/rtl" type="audio/mpeg">
     </audio>
 
-    <!-- Bouton fallback (caché par défaut, visible si autoplay bloqué) -->
-    <button id="audio-fallback-btn">🔊 ACTIVER SON</button>
+    <!-- Bouton audio (toujours visible) -->
+    <button id="audio-btn">🔇</button>
 
     <!-- Zone de contenu (slides) -->
     <div class="content-area">
@@ -952,34 +944,38 @@
         });
 
         // =====================
-        // LECTEUR RADIO RTL (Smart Autoplay)
+        // LECTEUR RADIO RTL (Toggle Simple)
         // =====================
         (function() {
             const radio = document.getElementById('radio-player');
-            const fallbackBtn = document.getElementById('audio-fallback-btn');
+            const audioBtn = document.getElementById('audio-btn');
+            let isMuted = true;
 
-            // Volume par défaut à 50% (ajustable via télécommande TV)
-            radio.volume = 0.5;
+            // Volume à 100% (l'utilisateur ajuste via TV)
+            radio.volume = 1.0;
 
-            // Tenter l'autoplay
-            radio.play().then(() => {
-                // Succès : le son démarre, bouton reste caché
-                console.log('Radio RTL démarrée avec succès');
-                fallbackBtn.style.display = 'none';
-            }).catch(err => {
-                // Échec : autoplay bloqué, afficher le bouton
-                console.log('Autoplay radio bloqué:', err.message);
-                fallbackBtn.style.display = 'block';
+            // Par défaut : muet (icône 🔇)
+            radio.muted = true;
+
+            // Tenter de charger le flux
+            radio.play().catch(err => {
+                console.log('Autoplay en attente:', err.message);
             });
 
-            // Clic sur le bouton fallback
-            fallbackBtn.addEventListener('click', function() {
-                radio.play().then(() => {
-                    console.log('Radio RTL démarrée manuellement');
-                    fallbackBtn.style.display = 'none';
-                }).catch(err => {
-                    console.error('Erreur lecture radio:', err);
-                });
+            // Toggle au clic
+            audioBtn.addEventListener('click', function() {
+                if (isMuted) {
+                    // Activer le son
+                    radio.muted = false;
+                    radio.play().catch(err => console.log(err));
+                    audioBtn.textContent = '🔊';
+                    isMuted = false;
+                } else {
+                    // Couper le son
+                    radio.muted = true;
+                    audioBtn.textContent = '🔇';
+                    isMuted = true;
+                }
             });
         })();
     </script>
